@@ -1,10 +1,19 @@
 package com.skilldistillery.job.controller;
 
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.skilldistillery.job.entities.User;
 import com.skilldistillery.job.services.UserService;
 
 @RestController
@@ -18,5 +27,35 @@ public class UserController {
 	public String ping() {
 		return "test";
 	}
-
+	
+	@GetMapping("users")
+	public List<User> findAllUsers(){
+		return userSvc.findAllUsers();
+	}
+	
+	@GetMapping("users/{userId}")
+	public User findByUserId(@PathVariable("userId")Integer id) {
+		return userSvc.findByUserId(id);
+	}
+	
+	//////////////CREATE USER//////////////
+	@PostMapping("users")
+	public User createUser(@RequestBody User user,
+			HttpServletResponse response,
+			HttpServletRequest request) {
+		User createUser = userSvc.createUser(user);
+		if(user!= null) {
+			response.setStatus(201);
+			StringBuffer url = request.getRequestURL();
+			url.append("/").append(user.getId());
+			response.setHeader("Location", url.toString());
+			return createUser;
+		} else {
+			response.setStatus(500);
+			createUser = null;
+			
+		}
+		return user;
+	}
+	
 }

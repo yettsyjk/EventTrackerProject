@@ -26,13 +26,13 @@ public class ApplicationServiceImpl implements ApplicationService {
 	}
 
 	@Override
-	public Application findByApplicationId(Integer id) {
-		Application foundApp = applRepo.findApplicationId(id);
+	public Application findByApplicationById(Integer userId) {
+		Application foundApp = applRepo.findApplicationById(userId);
 		return foundApp;
 	}
 
 	@Override
-	public List<Application> finalAllApplications() {
+	public List<Application> findAllAppl() {
 		return applRepo.findAll();
 	}
 
@@ -43,8 +43,8 @@ public class ApplicationServiceImpl implements ApplicationService {
 
 	//////////////////CREATE APPLICATION////////////////
 	@Override
-	public Application createApplication(Integer userId, Application appl) {
-		Optional<User> createdUser = userRepo.findById(userId);
+	public Application createApplicationOnUser(Integer id, Application appl) {
+		Optional<User> createdUser = userRepo.findById(id);
 		if (createdUser.isPresent()) {
 			appl.setUser(createdUser.get());
 		}
@@ -72,6 +72,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 		return appl;
 	}
 
+//////////////////DELETE APPLICATION////////////////
 	@Override
 	public Application deleteApplication(Integer userId, Integer applId) {
 		applRepo.deleteById(applId);
