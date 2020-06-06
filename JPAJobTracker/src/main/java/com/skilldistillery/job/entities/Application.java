@@ -72,6 +72,24 @@ public class Application {
 		this.enabled = enabled;
 	}
 
+	public Application(int id, String title, String companyName, LocalDateTime applyDate, LocalDateTime createDate,
+			String description, String contactName, String state, String city, String zipCode, boolean enabled,
+			User user) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.companyName = companyName;
+		this.applyDate = applyDate;
+		this.createDate = createDate;
+		this.description = description;
+		this.contactName = contactName;
+		this.state = state;
+		this.city = city;
+		this.zipCode = zipCode;
+		this.enabled = enabled;
+		this.user = user;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -158,6 +176,14 @@ public class Application {
 
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	@Override

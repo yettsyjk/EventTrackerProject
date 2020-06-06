@@ -29,7 +29,10 @@ public class ApplicationServiceImpl implements ApplicationService {
 	@Override
 	public Application createApplication(Integer userId, Application appl) {
 		Optional<User> createdUser = userRepo.findById(userId);
-		return null;
+		if(createdUser.isPresent()) {
+			appl.setUser(createdUser.get());
+		}
+		return appl;
 	}
 
 	@Override
@@ -45,9 +48,9 @@ public class ApplicationServiceImpl implements ApplicationService {
 	}
 
 	@Override
-	public List<Application> findByApplicationId(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Application findByApplicationId(Integer id) {
+		Application foundApp = applRepo.findApplicationId(id);
+		return foundApp;
 	}
 
 	@Override

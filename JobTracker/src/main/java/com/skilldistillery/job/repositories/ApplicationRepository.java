@@ -11,4 +11,6 @@ public interface ApplicationRepository extends JpaRepository<Application, Intege
 	List<Application> findByUserId(Integer id);
 	
 	List<Application> findByTitleContaining(String title);
+	
+	Application findApplicationId(Integer id);
 }

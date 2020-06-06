@@ -1,12 +1,14 @@
 package com.skilldistillery.job.entities;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import com.sun.istack.NotNull;
 
@@ -40,12 +42,15 @@ public class User {
 	
 	private boolean admin;
 	
+	@OneToMany(mappedBy="user")
+	private List<Application> appl;
 	
 	
 	//////////////////////
 	public User() {
 		super();
 	}
+	
 	public User(int id, String firstName, String lastName, String email) {
 		super();
 		this.id = id;
@@ -69,6 +74,35 @@ public class User {
 		this.password = password;
 		this.enabled = enabled;
 		this.admin = admin;
+	}
+	
+	
+	
+public User(int id, String firstName, String lastName, String email, String role, LocalDateTime createDate,
+			LocalDateTime updateDate, String username, String password, boolean enabled, boolean admin,
+			List<Application> appl) {
+		super();
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.role = role;
+		this.createDate = createDate;
+		this.updateDate = updateDate;
+		this.username = username;
+		this.password = password;
+		this.enabled = enabled;
+		this.admin = admin;
+		this.appl = appl;
+	}
+
+///////////////////////
+	
+	public List<Application> getAppl() {
+		return appl;
+	}
+	public void setAppl(List<Application> appl) {
+		this.appl = appl;
 	}
 	public int getId() {
 		return id;
@@ -161,7 +195,7 @@ public class User {
 	
 	
 	
-	///////////////////////
+	
 	
 	
 	

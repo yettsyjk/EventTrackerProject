@@ -63,8 +63,15 @@ class ApplicationTest {
 		assertEquals("SAIC", appl.getCompanyName());
 		assertEquals("Bob", user.getFirstName());
 	}
+	@Test
+	@DisplayName("User mapped class to application")
+	void test3() {
+		assertNotNull(appl);
+		assertEquals("Bob", user.getFirstName());
+	}
 	
 }
+//SELECT * FROM application LEFT OUTER JOIN user ON application.user_id WHERE = user.id =1;
 //SELECT u.id, a.id FROM user u JOIN application a WHERE u.id = 1;
 
 //SELECT u.id, u.first_name, u.last_name, a.id, a.title, a.apply_date, a.company_name  FROM user u JOIN application a WHERE u.id =1;

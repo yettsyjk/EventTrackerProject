@@ -16,7 +16,7 @@ public interface ApplicationService {
 
 	Application deleteApplication(Integer userId, Integer applId );
 	
-	List<Application> findByApplicationId(Integer id);
+	Application findByApplicationId(Integer id);
 	List<Application> finalAllApplications();
 	List<Application> findByTitleContaining(String title);
 }

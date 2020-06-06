@@ -21,6 +21,7 @@ class UserTest {
 	private static EntityManager em;
 	
 	private User user;
+	private Application appl;
 	
 
 	@BeforeAll
@@ -38,6 +39,7 @@ class UserTest {
 		em =emf.createEntityManager();
 		
 		user = em.find(User.class, 1);
+		appl = em.find(Application.class, 1);
 	
 	}
 
@@ -45,6 +47,7 @@ class UserTest {
 	void tearDown() throws Exception {
 		em.close();
 		user = null;
+		appl = null;
 		
 	}
 
@@ -60,6 +63,14 @@ class UserTest {
 		assertNotNull(user);
 		assertEquals("Bob", user.getFirstName() );
 		assertEquals("Sall", user.getLastName());
+	}
+	
+	@Test
+	@DisplayName("User class mapped")
+	void test3() {
+		assertNotNull(appl);
+		assertEquals("SAIC", appl.getCompanyName());
+
 	}
 	
 }
