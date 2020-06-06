@@ -53,7 +53,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 	
 	//////////////////UPDATE APPLICATION////////////////
 	@Override
-	public Application updateApplication(Integer userId, Integer applId, Application appl) {
+	public Application updateApplicationOnUser(Integer userId, Integer applId, Application appl) {
 		Optional<Application> updatedAppl = applRepo.findById(applId);
 		if(updatedAppl.isPresent()) {
 			Application updateAnAppl = updatedAppl.get();
@@ -74,7 +74,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 
 //////////////////DELETE APPLICATION////////////////
 	@Override
-	public Application deleteApplication(Integer userId, Integer applId) {
+	public Application deleteApplicationOnUser(Integer userId, Integer applId) {
 		applRepo.deleteById(applId);
 		return null;
 	}

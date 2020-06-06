@@ -15,9 +15,9 @@ public interface ApplicationService {
 	
 	Application createApplicationOnUser(Integer id, Application appl);
 	
-	Application updateApplication(Integer userId, Integer applId, Application appl );
+	Application updateApplicationOnUser(Integer userId, Integer applId, Application appl );
 
-	Application deleteApplication(Integer userId, Integer applId );
+	Application deleteApplicationOnUser(Integer userId, Integer applId );
 	
 	Application findByApplicationById(Integer userId);
 	
