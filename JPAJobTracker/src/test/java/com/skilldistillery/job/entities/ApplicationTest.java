@@ -15,12 +15,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class UserTest {
+class ApplicationTest {
 	
 	private static EntityManagerFactory emf;
 	private static EntityManager em;
 	
-	private User user;
+	private Application appl;
 	
 
 	@BeforeAll
@@ -37,29 +37,28 @@ class UserTest {
 	void setUp() throws Exception {
 		em =emf.createEntityManager();
 		
-		user = em.find(User.class, 1);
+		appl = em.find(Application.class, 1);
 	
 	}
 
 	@AfterEach
 	void tearDown() throws Exception {
 		em.close();
-		user = null;
+		appl = null;
 		
 	}
 
-//	@Test
-//	void test1() {
-//		fail("Not yet implemented");
-//	}
-
 	@Test
-	@DisplayName("User class mapped")
-	void test2() {
-		assertNotNull(user);
-		assertEquals("Bob", user.getFirstName() );
-		assertEquals("Sall", user.getLastName());
+	void test1() {
+		fail("Not yet implemented");
 	}
+
+//	@Test
+//	@DisplayName("User class mapped")
+//	void test2() {
+//		assertNotNull(appl);
+//		
+//	}
 	
 }
 //SELECT u.id, a.id FROM user u JOIN application a WHERE u.id = 1;
