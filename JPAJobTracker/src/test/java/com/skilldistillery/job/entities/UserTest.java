@@ -48,10 +48,11 @@ class UserTest {
 		
 	}
 
-//	@Test
-//	void test1() {
-//		fail("Not yet implemented");
-//	}
+	@Test
+	@DisplayName("user not null")
+	void test1() {
+		assertNotNull(user);
+	}
 
 	@Test
 	@DisplayName("User class mapped")

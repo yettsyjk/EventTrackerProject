@@ -1,10 +1,14 @@
 package com.skilldistillery.job.entities;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import com.sun.istack.NotNull;
 
 @Entity
 public class User {
@@ -19,9 +23,26 @@ public class User {
 	@Column(name = "last_name")
 	private String lastName;
 	private String email;
+
+	private String role;
+	
+	@Column(name="create_date")
+	private LocalDateTime createDate;
+	
+	@Column(name="update_date")
+	private LocalDateTime updateDate;
+	
+	private String username;
+	private String password;
+	
+	@NotNull
+	private boolean enabled;
+	
+	private boolean admin;
 	
 	
 	
+	//////////////////////
 	public User() {
 		super();
 	}
@@ -34,6 +55,21 @@ public class User {
 	}
 	
 	
+	public User(int id, String firstName, String lastName, String email, String role, LocalDateTime createDate,
+			LocalDateTime updateDate, String username, String password, boolean enabled, boolean admin) {
+		super();
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.role = role;
+		this.createDate = createDate;
+		this.updateDate = updateDate;
+		this.username = username;
+		this.password = password;
+		this.enabled = enabled;
+		this.admin = admin;
+	}
 	public int getId() {
 		return id;
 	}
@@ -59,6 +95,48 @@ public class User {
 		this.email = email;
 	}
 	
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
+	}
+	public LocalDateTime getCreateDate() {
+		return createDate;
+	}
+	public void setCreateDate(LocalDateTime createDate) {
+		this.createDate = createDate;
+	}
+	public LocalDateTime getUpdateDate() {
+		return updateDate;
+	}
+	public void setUpdateDate(LocalDateTime updateDate) {
+		this.updateDate = updateDate;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public boolean isEnabled() {
+		return enabled;
+	}
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+	public boolean isAdmin() {
+		return admin;
+	}
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;

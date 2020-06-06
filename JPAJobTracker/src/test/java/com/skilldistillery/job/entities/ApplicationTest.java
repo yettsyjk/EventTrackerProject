@@ -21,6 +21,7 @@ class ApplicationTest {
 	private static EntityManager em;
 	
 	private Application appl;
+	private User user;
 	
 
 	@BeforeAll
@@ -38,6 +39,7 @@ class ApplicationTest {
 		em =emf.createEntityManager();
 		
 		appl = em.find(Application.class, 1);
+		user = em.find(User.class, 1);
 	
 	}
 
@@ -45,32 +47,31 @@ class ApplicationTest {
 	void tearDown() throws Exception {
 		em.close();
 		appl = null;
-		
+		user = null;
 	}
 
 	@Test
+	@DisplayName("application not null")
 	void test1() {
-		fail("Not yet implemented");
+		assertNotNull(appl);
 	}
 
-//	@Test
-//	@DisplayName("User class mapped")
-//	void test2() {
-//		assertNotNull(appl);
-//		
-//	}
+	@Test
+	@DisplayName("application class mapped")
+	void test2() {
+		assertNotNull(appl);
+		assertEquals("SAIC", appl.getCompanyName());
+		assertEquals("Bob", user.getFirstName());
+	}
 	
 }
 //SELECT u.id, a.id FROM user u JOIN application a WHERE u.id = 1;
 
-//SELECT u.id, u.first_name, u.last_name, a.id, a.title, a.apply_date 
-//FROM user u
-//JOIN application a
-//WHERE u.id =1;
-//+----+------------+-----------+----+---------------------------+------------+
-//| id | first_name | last_name | id | title                     | apply_date |
-//+----+------------+-----------+----+---------------------------+------------+
-//|  1 | Bob        | Sall      |  1 | Software Developer        | 2020-06-04 |
-//|  1 | Bob        | Sall      |  2 | Junior Software Developer | 2020-06-04 |
-//|  1 | Bob        | Sall      |  3 | Software Developer        | 2020-06-04 |
-//+----+------------+-----------+----+---------------------------+------------+
+//SELECT u.id, u.first_name, u.last_name, a.id, a.title, a.apply_date, a.company_name  FROM user u JOIN application a WHERE u.id =1;
+//+----+------------+-----------+----+---------------------------+------------+----------------------------+
+//| id | first_name | last_name | id | title                     | apply_date | company_name               |
+//+----+------------+-----------+----+---------------------------+------------+----------------------------+
+//|  1 | Bob        | Sall      |  1 | Software Developer        | 2020-06-04 | SAIC                       |
+//|  1 | Bob        | Sall      |  2 | Junior Software Developer | 2020-06-04 | Radiance Technologies, Inc |
+//|  1 | Bob        | Sall      |  3 | Software Developer        | 2020-06-04 | PeopleTec                  |
+//+----+------------+-----------+----+---------------------------+------------+----------------------------+
