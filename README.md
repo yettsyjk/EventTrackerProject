@@ -10,7 +10,7 @@
 ## Overview
  Ever wanted a central location that tracks all of the jobs you have applied to while job hunting?
  Look no further..
-## API endpoints
+## Job_Application API endpoints
 | HTTP Verb | URI                  | Request Body | Response Body | Purpose |
 |-----------|----------------------|--------------|---------------|---------|
 | GET       | `/api/applied`            |              | Description of the API and its endpoints | **Index** endpoint |
@@ -18,6 +18,10 @@
 | POST      | `/api/applied/1`      | Representation of a new _application_ resource | Description of the result of the operation | **Create** endpoint |
 | PUT       | `/api/12/applied/3`   | Representation of a new version of _application_ `3` | | **Replace** endpoint |
 | DELETE    | `/api/12/applied/3`   |              | | **Delete** route |
+
+## User API endpoints
+| HTTP Verb | URI                  | Request Body | Response Body | Purpose |
+|-----------|----------------------|--------------|---------------|---------|
 | GET       | `/api/users`            |              | Description of the API and its endpoints | **Index** endpoint |
 | GET       | `/api/users/1`            |              | Description of the API and its endpoints | **Retrieve** endpoint |
 | POST      | `/api/users/11`      | Representation of a new _user_ resource | Description of the result of the operation | **Create** endpoint |
@@ -28,7 +32,7 @@
 * Java8
 * MySQL, MySQL Workbench
 * JPA, JDBC
-* JUnit
+* JUnit Testing
 * Spring Boot, Spring REST web services
 * Postman for back-end routing test
 * Zoom, Slack to comunicate remotely

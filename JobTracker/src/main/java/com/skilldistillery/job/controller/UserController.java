@@ -36,8 +36,20 @@ public class UserController {
 	}
 
 	@GetMapping("users/{userId}")
-	public User findByUserId(@PathVariable("userId") Integer id) {
-		return userSvc.findByUserId(id);
+	public User findByUserId(@PathVariable("userId") Integer id,
+			HttpServletResponse response) {
+		try {
+			User user = userSvc.findByUserId(id);
+			if(user == null) {
+				response.setStatus(404);
+			}
+			return user;
+		}catch(Exception e) {
+			e.printStackTrace();
+			response.setStatus(400);
+			return null;
+		}
+		
 	}
 
 	////////////// CREATE USER//////////////
