@@ -6,7 +6,9 @@
 
 ### Week 11 - 13 Project for Skill Distillery
 :mortar_board:
-'Event Tracker' is a broad term for anything that keeps track of information over time. Examples of these applications are 'Mint' (financial tracking) and 'MyFitnessPal' (diet and exercise tracker). These are very involved applications with a huge feature set.
+* 'Event Tracker' is a broad term for anything that keeps track of information over time. Examples of these applications are 'Mint' (financial tracking) and 'MyFitnessPal' (diet and exercise tracker). These are very involved applications with a huge feature set.
+* Perform simple CRUD on two database tables that I created using MySQL Workbench.
+* Software Developer Yettsy Jo Knapp. Denver, CO June 2020
 
 ## JobTracker Overview
  Ever wanted a central location that tracks all of the jobs you have applied to while job hunting?
@@ -46,11 +48,19 @@
 * June 5, 2020 - June 7, 2020
 
 ### AWS EC2 Instance
-[JobTracker](http://3.23.55.198:8080/JobTracker/)
+[JobTracker](http://3.23.55.198:8080/JobTracker/api/)
 
 
 ### MySQL schema
 ![JobTracker](https://github.com/yettsyjk/EventTrackerProject/blob/master/DB/jobtrackerdb.png?raw=true)
 <hr>
+
+### Lessons Learned
+1. Database MySQL: Mapping Entities to mySQL two tables, and proper SQL traverse of database that I created.
+1. Spring Tool Suite4 SpringBoot Project: Currently using controllers to abstract and separate concerns
+1. Remote learning due to COVID-19 and the course decision to remain remote: I find this style of learning very difficult. I find myself spending more time reviewing the videos of the class recording to be better prepared for the next day. My labs never get finished and struggle to understand concepts.  
+1. JUnit testing: Test Driven Development seems to be where I enjoy my time. Let's break the code and find it's vulnerabilities.
+1. Create, Read, Update, and DELETE routes through each controller.
+
 
 [Schema](SCHEMA.md) | [Yettsy](https://www.linkedin.com/in/yettsy-jo-knapp/) |
