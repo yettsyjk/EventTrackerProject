@@ -6,8 +6,9 @@
 
 ### Week 11 - 13 Project for Skill Distillery
 :mortar_board:
+'Event Tracker' is a broad term for anything that keeps track of information over time. Examples of these applications are 'Mint' (financial tracking) and 'MyFitnessPal' (diet and exercise tracker). These are very involved applications with a huge feature set.
 
-## Overview
+## JobTracker Overview
  Ever wanted a central location that tracks all of the jobs you have applied to while job hunting?
  Look no further..
 
@@ -43,6 +44,10 @@
 
 ### Timeline
 * June 5, 2020 - June 7, 2020
+
+### AWS EC2 Instance
+[JobTracker](http://3.23.55.198:8080/JobTracker/)
+
 
 ### MySQL schema
 ![JobTracker](https://github.com/yettsyjk/EventTrackerProject/blob/master/DB/jobtrackerdb.png?raw=true)
