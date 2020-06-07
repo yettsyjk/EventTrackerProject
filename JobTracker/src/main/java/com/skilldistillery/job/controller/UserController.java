@@ -54,7 +54,9 @@ public class UserController {
 
 	////////////// CREATE USER//////////////
 	@PostMapping("users")
-	public User createUser(@RequestBody User user, HttpServletResponse response, HttpServletRequest request) {
+	public User createUser(@RequestBody User user, 
+			HttpServletResponse response, 
+			HttpServletRequest request) {
 		User createUser = userSvc.createUser(user);
 		if (user != null) {
 			response.setStatus(201);
@@ -63,7 +65,7 @@ public class UserController {
 			response.setHeader("Location", url.toString());
 			return createUser;
 		} else {
-			response.setStatus(500);
+			response.setStatus(400);
 			createUser = null;
 
 		}
@@ -72,16 +74,34 @@ public class UserController {
 
 	///////// UPDATE USER///////////
 	@PutMapping("users/{id}")
-	public User updateUserById(@PathVariable Integer id, @RequestBody User user) {
-		return userSvc.updateUserById(id, user);
+	public User updateUserById(@PathVariable Integer id,
+			@RequestBody User user, 
+			HttpServletResponse response,
+			HttpServletRequest request) {
+		try {
+			user = userSvc.updateUserById(id, user);
+			if(user == null ) {
+				response.setStatus(404);
+			}
+		}catch(Exception e) {
+			response.setStatus(400);
+			user = null;
+			e.printStackTrace();
+		}
+		return user;
 	}
 
 	///////// DELETE USER ////////
 	@DeleteMapping("users/{id}")
-	public void deleteUser(@PathVariable("id") Integer id, HttpServletRequest request, HttpServletResponse response) {
+	public void deleteUser(@PathVariable("id") Integer id,
+			HttpServletRequest request,
+			HttpServletResponse response) {
 		try {
-			userSvc.deleteUserById(id);
-			response.setStatus(204);
+			if(userSvc.deleteUserById(id)) {
+				response.setStatus(204);
+			}else {
+				response.setStatus(404);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			response.setStatus(400);

@@ -10,6 +10,8 @@
 ## Overview
  Ever wanted a central location that tracks all of the jobs you have applied to while job hunting?
  Look no further..
+
+### MVP
 ## Job_Application API endpoints
 | HTTP Verb | URI                  | Request Body | Response Body | Purpose |
 |-----------|----------------------|--------------|---------------|---------|

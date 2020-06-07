@@ -37,21 +37,34 @@ public class ApplicationController {
 	}
 	
 	@GetMapping("applied/{id}")
-	public Application findByApplicationById(@PathVariable("id") Integer userId){
-		return applSvc.findByApplicationById(userId);
+	public Application findByApplicationById(@PathVariable("id") Integer userId,
+			HttpServletResponse response){
+		try {
+			Application appl = applSvc.findByApplicationById(userId);
+			if(appl == null) {
+				response.setStatus(404);
+			}
+			return appl;
+		}catch(Exception e) {
+			e.printStackTrace();
+			response.setStatus(400);
+			return null;
+		}
+		
 	}
 	
 	
 	/////////CREATE APPLICATION ON USER/////////////http://localhost:8083/api/applied/1
 	@PostMapping("applied/{id}")
-	public Application createApplication(@PathVariable Integer id,@RequestBody Application appl,
+	public Application createApplication(@PathVariable Integer id,
+			@RequestBody Application appl,
 			HttpServletResponse response,
 			HttpServletRequest request){
 		try {
-			Application applic = applSvc.createApplicationOnUser(id, appl);
+			appl = applSvc.createApplicationOnUser(id, appl);
 			response.setStatus(201);
 			StringBuffer url = request.getRequestURL();
-			url.append("/").append(applic.getId());
+			url.append("/").append(appl.getId());
 			response.setHeader("Location", url.toString());
 		}catch(Exception e) {
 			response.setStatus(404);
@@ -75,6 +88,8 @@ public class ApplicationController {
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
+			response.setStatus(400);
+			appl = null;
 		}
 		
 		return appl;
