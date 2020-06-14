@@ -9,7 +9,7 @@ function init(){
 	document.viewApps.viewLog.addEventListener('click', viewAppEntries);
 	document.entryForm.submit.addEventListener('click', addAppEntry);
 	document.addEventListener('click', updateApps);
-	// document.addEventListener('click', removeApps);
+	document.addEventListener('click', removeApps);
 }
 function userInfo(){
 	event.preventDefault();
@@ -36,7 +36,7 @@ function viewAppEntries(e){
 			}
 		}
 		if(xhr.readyState === 4 && xhr.status !== 200){
-			console.log(xhr.status);
+			console.error(xhr.status + ' : ' + xhr.responseText);
 		}
 	}
 	xhr.send();
@@ -163,7 +163,7 @@ function addAppEntry(e, userId){
 				console.log(createdAppJSON);
 			}else {
 				if(xhr.status === 400){
-					console.log('invalid JSON'+ `<pre>${appJSON}</pre>`);
+					console.error(xhr.status + ' : ' + xhr.responseText);
 					displayError(`invalid film data, <pre>${appJSON}</pre>`);
 				} else{
 					displayError('invalid' + xhr.status);
@@ -259,7 +259,7 @@ function updateSubmit(e){
 
 			} else {
 				console.log('hmm.. check your PUT');
-				console.log(xhr.status + ' '+ xhr.responseText);
+				console.error(xhr.status + ' : ' + xhr.responseText);
 			}
 		}	
 		};
@@ -280,10 +280,25 @@ function updateSubmit(e){
 }
 /////////DELETE Appl////////
 function removeApps(e){
+	let uri = `api/${userId}/applied/ + appId`;
 	if(e.target && e.target.id == 'removeBtn'){
 		let inputTitle = e.target.parentElement.firstChild.textContent;
 		let xhr = new XMLHttpRequest();
-		xhr.open('DELETE', uri, true)
+		xhr.open('DELETE', uri, true);
+		if(!isNaN(appId) && appId > 0){
+			xhr.onreadystatechange = function(){
+				if(xhr.readyState === 4){
+					if(xhr.status === 200 || xhr.status === 204){
+						let removeData = JSON.parse(xhr.responseText);
+						viewAppEntries();
+						console.log(removeData + 'removed');
+					} else{
+						console.log('hmm.. detele requires attention');
+						console.error(xhr.status + ' : ' + xhr.responseText);
+					}
+				}
+			}
+		}
 
 
 	}
