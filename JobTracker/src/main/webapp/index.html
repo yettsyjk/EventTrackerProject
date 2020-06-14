@@ -6,61 +6,69 @@
 <script type="text/javascript" src="js/script.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet"/>
 <link rel="icon" href="https://img.icons8.com/plasticine/2x/new-job.png" sizes="16x16"/>
-
 </head>
 <body>
-<h1 style="text-align: center;">Job Application Tracker</h1>
-<div>
-    <h2>Welcome to Breakthrough </h2>
     <h3>Keep Track of Your Job Applications</h3>
 
-    <br>
-    
-    <h2>Enter User Id</h2>
-    <form name="userForm">
-        <label for="userId">User Id: </label>
-        <input type="number" name="userId" placeholder="Enter User Id"/>
-        <button type="lookup">Get User</button>
-    </form>
-
-
-
-<h2>View All Applications</h2>
-   <form name="viewApps">
-       <input type="button" name="userApp" value="View App Entries" />
-   </form>
-
+<form name="appForm">
+    <label for="appId">Application: </label>
+   <input type="number" name="appId" placeholder="Enter App Id*"/>
+    <button type="lookup" name="button">Get Application Id</button>
+</form>
+<br>
+<div class="output">
+    <div id="appData"></div>
+    <div id="appRemove"></div>
 </div>
-<h2>Application Entry Form</h2>
-<form name="entryForm">
-    <label for="title">Title: </label>
-    <input type="text" id="title" name="title" placeholder="Enter Title"/><br>
-        <label for="description">Description: </label>
-        <input type="text" id="description" name="description" placeholder="Enter description*"/><br>
-            <label for="companyName">Company Name: </label>
-            <input type="text" id="companyName" name="companyName" placeholder="Company Name*"/><br>
-                <label for="applyDate">Date Applied: </label>
-                <input type="date" id="applyDate" name="applyDate" placeholder="Date*"/><br>
-                    <label for="state">State: </label>
-                    <input type="text" id="state" name="state" placeholder="State*"/><br>
-                        <label for="city">City: </label>
-                        <input type="text" id="city" name="city" placeholder="City*"/><br>
-                            <label for="zipCode">Zip Code: </label>
-                            <input type="number" id="zipCode" name="zipCode" placeholder="Zip Code*"/><br>
-    <input type="submit" id="submit" value="submit" />
+
+
+<br>
+<form name="addForm">
+    <table>
+        <tbody>
+            <tr class="row">
+                <td for="title">Title: </td>
+                <td>
+                    <input type="text" name="title" placeholder="title">
+                </td>
+            </tr>
+
+            <tr class="row">
+                <td for="description">Description</td>
+                <td>
+                    <input type="text" name="description" placeholder="description">
+                </td>
+            </tr>
+            <tr class="row">
+                <td for="companyName">Company Name: </td>
+                <td>
+                    <input type="text" name="companyName" placeholder="companyName">
+                </td>
+            </tr>
+            <tr class="row">
+                <td for="state">State: </td>
+                <td>
+                    <input type="text" name="state" placeholder="state">
+                </td>
+            </tr>
+            <tr class="row">
+                <td for="city">City: </td>
+                <td>
+                    <input type="text" name="city" placeholder="city">
+                </td>
+            </tr>
+            <tr class="row">
+                <td for="zipCode">ZipCode: </td>
+                <td>
+                    <input type="number" name="zipCode" placeholder="zip code">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <button action="submit" type="submit" name="submit">Submit</button>
 </form>
 
 
-
-
-<div id="appEntry">
-    <table id="entryTable"> </table>
-</div>
-
-
-
-    <div id="userData"></div>
-    <div id="appData"></div>
 
 </body>
 </html>
