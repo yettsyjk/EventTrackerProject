@@ -27,8 +27,12 @@ public class ApplicationServiceImpl implements ApplicationService {
 
 	@Override
 	public Application findByApplicationById(Integer userId) {
-		Application foundApp = applRepo.findApplicationById(userId);
-		return foundApp;
+		Optional<Application> opAppTracker = applRepo.findById(userId);
+//		Application foundApp = applRepo.findApplicationById(userId);
+		if(opAppTracker.isPresent()) {
+			return opAppTracker.get(); 
+		}
+		return null;
 	}
 
 	@Override

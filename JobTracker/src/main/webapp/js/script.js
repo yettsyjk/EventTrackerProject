@@ -6,12 +6,12 @@ window.addEventListener('load', function(e){
 
 function init(){
 	document.userForm.lookup.addEventListener('click', userInfo);
-	document.viewApps.viewLog.addEventListener('click', viewAppEntries);
+	document.viewApps.userApp.addEventListener('click', viewAppEntries);
 	document.entryForm.submit.addEventListener('click', addAppEntry);
 	document.addEventListener('click', updateApps);
 	document.addEventListener('click', removeApps);
 }
-function userInfo(){
+function userInfo(event){
 	event.preventDefault();
 			let userId = document.userForm.userId.value;
 			console.log(userId);
@@ -41,8 +41,35 @@ function viewAppEntries(e){
 	}
 	xhr.send();
 }
-
-
+function createTable(){
+	tableHeadDescription.textContent = 'Description';
+	tableHeadAppTitle.textContent = 'Title';
+	tableHeadAppCompanyName.textContent = 'Company Name';
+	tableHeadAppDate.textContent = 'Date Applied';
+	tableHeadAppState.textContent = 'State';
+	tableHeadAppCity.textContent = 'City';
+	tableHeadAppZip.textContent = 'Zip Code';
+}
+function appendTableRow(){
+	tableRow.appendChild(tableHeadAppTitle);
+	tableRow.appendChild(tableHeadDescription);
+	tableRow.appendChild(tableHeadAppCompanyName);
+	tableRow.appendChild(tableHeadAppDate);
+	tableRow.appendChild(tableHeadAppState);
+	tableRow.appendChild(tableHeadAppCity);
+	tableRow.appendChild(tableHeadAppZip);
+}
+function createRows(){
+	tr.appendChild(inputTitle);
+	tr.appendChild(inputDescription);
+	tr.appendChild(inputCompanyName);
+	tr.appendChild(inputAppDate);
+	tr.appendChild(inputState);
+	tr.appendChild(inputCity);
+	tr.appendChild(inputZipCode);
+	tr.appendChild(updateBtn);
+	tr.appendChild(deleteBtn);
+	}
 
 function displayApplications(app){
 	console.log(app + 'line47');
@@ -62,28 +89,11 @@ function displayApplications(app){
 	let tableHeadAppZip = document.createElement('th');
 
 	let tableBody = document.createElement('tbody');
-	
-
 	//VV////convert to table////VV///////
-
-	tableHeadDescription.textContent = 'Description';
-	tableHeadAppTitle.textContent = 'Title';
-	tableHeadAppCompanyName.textContent = 'Company Name';
-	tableHeadAppDate.textContent = 'Date Applied';
-	tableHeadAppState.textContent = 'State';
-	tableHeadAppCity.textContent = 'City';
-	tableHeadAppZip.textContent = 'Zip Code';
-	
+	createTable();
 
 	//implement displayApplications
-	tableRow.appendChild(tableHeadAppTitle);
-	tableRow.appendChild(tableHeadDescription);
-	
-	tableRow.appendChild(tableHeadAppCompanyName);
-	tableRow.appendChild(tableHeadAppDate);
-	tableRow.appendChild(tableHeadAppState);
-	tableRow.appendChild(tableHeadAppCity);
-	tableRow.appendChild(tableHeadAppZip);
+	appendTableRow();
 
 	tableHead.appendChild(tableRow);
 	table.appendChild(tableHead);
@@ -120,16 +130,7 @@ function displayApplications(app){
 		inputZipCode.textContent = value.zipCode;
 
 		//create rows
-		tr.appendChild(inputTitle);
-		tr.appendChild(inputDescription);
-		tr.appendChild(inputCompanyName);
-		tr.appendChild(inputAppDate);
-		tr.appendChild(inputState);
-		tr.appendChild(inputCity);
-		tr.appendChild(inputZipCode);
-
-		tr.appendChild(updateBtn);
-		tr.appendChild(deleteBtn);
+		createRows();
 		tableBody.appendChild(tr);
 
 	});
@@ -138,7 +139,7 @@ function displayApplications(app){
 	
 }
 
-///POST //////
+///POST passes userId//////
 function addAppEntry(e, userId){
 	e.preventDefault();
 	let form = e.target.parentElement;
@@ -188,11 +189,8 @@ function addAppEntry(e, userId){
 }//addEntry end function
 
 ///UPDATE AppEntry/////////////
-function updateApps(e){
-	if(e.target && e.target.id === 'updateBtn'){
-		console.log('update');
-		let form = document.createElement('form');
-		let inputTitle = document.createElement('input');
+function createUpdateElements(){
+	let inputTitle = document.createElement('input');
 		let inputCompanyName = document.createElement('input');
 		let inputDesciption = document.createElement('input');
 		let inputState = document.createElement('input');
@@ -229,7 +227,13 @@ function updateApps(e){
 		submit.id = 'submit';
 		submit.value = 'Submit';
 		submit.type= "submit";
+}
 
+function updateApps(e){
+	if(e.target && e.target.id === 'updateBtn'){
+		console.log('update');
+		let form = document.createElement('form');
+		createUpdateElements();
 
 		form.appendChild(inputTitle);
 		form.appendChild(inputCompanyName);
@@ -269,7 +273,7 @@ function updateSubmit(e){
 			'description': description,
 			'state': state,
 			'city': city,
-			'zipCode': parseInt(zipCode);
+			'zipCode': parseInt(zipCode)
 		}
 		let inputJSON = JSON.stringify(updateInput);
 		xhr.send(inputJSON);
@@ -281,8 +285,8 @@ function updateSubmit(e){
 /////////DELETE Appl////////
 function removeApps(e){
 	let uri = `api/${userId}/applied/ + appId`;
+	let appId = e.target.parentElement.firstChild.textContent;
 	if(e.target && e.target.id == 'removeBtn'){
-		let inputTitle = e.target.parentElement.firstChild.textContent;
 		let xhr = new XMLHttpRequest();
 		xhr.open('DELETE', uri, true);
 		if(!isNaN(appId) && appId > 0){
@@ -297,17 +301,14 @@ function removeApps(e){
 						console.error(xhr.status + ' : ' + xhr.responseText);
 					}
 				}
-			}
+			};
+			xhr.send();
 		}
-
-
 	}
-
 }
 
 
 /////////USERS///////
-
 function getApplicationsByUserId(userId){
 	let xhr = new XMLHttpRequest();
 	let uri = 'api/applied/' + userId;
@@ -358,29 +359,5 @@ function displayError(message){
 	let appDiv = document.getElementById('appData');
 	appDiv.textContent = '';
 }
-
-// 	if(app.title === ''){
-// 		errors.push('Title must be entered.');
-// 	}
-// 	if(app.companyName === ''){
-// 		errors.push('Company Name must be provided.');
-// 	}
-// 	if(app.description === ''){
-// 		errors.push('Description must be provided.');
-// 	}
-// 	if(app.state.length !== 2){
-// 		errors.push('State must two characters.');
-// 	}
-// 	if(app.city === ''){
-// 		errors.push('City must be provided.');
-// 	}
-// 	if(app.zipCode === 5){
-// 		if(typeof parseInt(zipCode) !== 'number'){
-// 			errors.push('Zip must be a number');
-// 		}
-// 	} else{
-// 		errors.push('Zip code must be 5 numbers long.');
-// 	}
-// 	return errors;
 
 

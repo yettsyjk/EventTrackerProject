@@ -34,18 +34,21 @@
 | DELETE    | `/api/users/12`   |              | | **Delete** route |
 
 ### Technologies Used
-* Java8
-* MySQL, MySQL Workbench
+* Java8 programming language
+* VanillaJS
+* MySQL, MySQL Workbench for database management
 * JPA, JDBC
-* JUnit Testing
-* Spring Boot, Spring REST web services
-* Postman for back-end routing test
+* JUnit4 Testing
+* SpringToolSuite4, Spring Boot, Spring REST web services
+* Visual Studio Code for VanillaJS scripting
+* Postman for servside and clientside routing test
 * Zoom, Slack to comunicate remotely
 * Terminal Command Line, Git and GitHub for version control
 
 
 ### Timeline
-* June 5, 2020 - June 7, 2020
+* June 5, 2020 - June 7, 2020 - setup Postman testing Application and User tables
+* June 12, 202- - June 14, 2020 - setup webapps vanillaJS front-end
 
 ### AWS EC2 Instance
 [JobTracker](http://3.23.55.198:8080/JobTracker/api/)
@@ -61,6 +64,8 @@
 1. Remote learning due to COVID-19 and the course decision to remain remote: I find this style of learning very difficult. I find myself spending more time reviewing the videos of the class recording to be better prepared for the next day. My labs never get finished and struggle to understand concepts.  
 1. JUnit testing: Test Driven Development seems to be where I enjoy my time. Let's break the code and find it's vulnerabilities.
 1. Create, Read, Update, and DELETE routes through each controller.
+1. VanillaJS, this course spends a few days teaching a new language for front-end. VanillaJS seems very tedius and not as flexible as Java. Creating buttons and inputs should be easier and I can't imagine a company that utilizes it. However, knowing how vanillaJS works is necessary to understand Javascript fundamentals.
+1. Clientside, wanting to disable data seems to be a struggle for me as I thought that having the code in controllers made it easier and not understanding how javascript script.js disables the data.
 
 
-[Schema](SCHEMA.md) | [Yettsy](https://www.linkedin.com/in/yettsy-jo-knapp/) |
+[Schema](SCHEMA.md) |[VanillaJSProject](VANILLAJS.md)| [Yettsy](https://www.linkedin.com/in/yettsy-jo-knapp/) |
