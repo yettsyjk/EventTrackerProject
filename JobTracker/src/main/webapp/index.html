@@ -13,6 +13,15 @@
 <div>
     <h2>Welcome to Breakthrough </h2>
     <h3>Keep Track of Your Job Applications</h3>
+    <form name="userForm">
+        <label for="userId">User Id: </label>
+        <input type="number" name="userId" placeholder="Enter User Id"/>
+        <button type="lookup">Get User</button>
+    </form>
+
+
+
+
    <form name="viewApps">
        <input type="button" name="viewLog" value="View App Entries" />
    </form>
@@ -27,13 +36,13 @@
             <label for="companyName">Company Name: </label>
             <input type="text" id="companyName" name="companyName" placeholder="Company Name*"/><br>
                 <label for="applyDate">Date Applied: </label>
-                <input type="text" id="applyDate" name="applyDate" placeholder="Date*"/><br>
+                <input type="date" id="applyDate" name="applyDate" placeholder="Date*"/><br>
                     <label for="state">State: </label>
                     <input type="text" id="state" name="state" placeholder="State*"/><br>
                         <label for="city">City: </label>
                         <input type="text" id="city" name="city" placeholder="City*"/><br>
                             <label for="zipCode">Zip Code: </label>
-                            <input type="text" id="zipCode" name="zipCode" placeholder="Zip Code*"/><br>
+                            <input type="number" id="zipCode" name="zipCode" placeholder="Zip Code*"/><br>
     <input type="submit" id="submit" value="submit" />
 </form>
 
@@ -42,6 +51,12 @@
 
 <div id="allEntries">
     <table id="entryTable"> </table>
+</div>
+
+
+<div id="output">
+    <div id="userData"></div>
+    <div id="appData"></div>
 </div>
 </body>
 </html>
