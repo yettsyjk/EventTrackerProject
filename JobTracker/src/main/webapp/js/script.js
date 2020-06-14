@@ -5,10 +5,10 @@ window.addEventListener('load', function(){
 	
 });
 function init(){
-    console.log('test');
+    
     let addUserBtn = document.getElementById('addUser');
     addUserBtn.addEventListener('click', createUserForm);
-    
+    console.log('test');
     document.appForm.userId.addEventListener('click', function(e){
         e.preventDefault();
         let userId = document.appForm.userId.value;
@@ -135,7 +135,7 @@ function postUser(usr){
     let form = document.createUserForm;
     let usrJSON = JSON.stringify(usr);
     let xhr = new XMLHttpRequest();
-	let uri = 'api/applied';
+	let uri = 'api/users';
 	
 	xhr.open('POST', uri, true);
 	xhr.setRequestHeader('Content-type', 'application/json');
