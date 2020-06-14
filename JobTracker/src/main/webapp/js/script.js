@@ -1,92 +1,133 @@
-window.addEventListener('load', function(e){
+window.addEventListener('load', function(){
 	console.log('you rang?');
 	init();
 	
 });
 function init(){
     console.log('test');
-    document.appForm.lookup.addEventListener('click', function(e){
+    let addAppBtn = document.getElementById('addApp');
+    addAppBtn.addEventListener('click', createAppJS);
+    document.appForm.app.addEventListener('click', function(e){
         e.preventDefault();
-        let appId = document.appForm.appId.value;
-        if(!isNaN(appId) && appId > 0){
-            getApp(appId);
+        let userId = document.appForm.userId.value;
+        if(!isNaN(userId) && userId > 0){
+            getAllUsers(userId);
         } 
     });
-    document.appRemoveForm.find.addEventListener('click', function(e){
-        e.preventDefault();
-        let appId = document.appForm.appId.value;
-        if(!isNaN(appId) && appId > 0){
-            removeApp(appId);
-        }
-    });
-
-    var btn = document.addForm.submit;
-    btn.addEventListener('click', function(e){
-    e.preventDefault();
-    let form = document.addForm;
-    let app = {
-        title: form.title.value,
-	    description: form.description.value,
-	    companyName: form.companyName.value,
-	    state: form.state.value,
-	    city: form.city.value,
-	    zipCode: form.zipCode.value
-        };
-    createApp(app);
-    });
 }
 
-function displayApp(app){
-    let appDiv = document.getElementById('appData');
+      
+function displayUsers(app){
+  
+    let appDiv = document.getElementById('applications');
     appDiv.textContent = '';
-
-    let appTitle = document.createElement('h2');
-    appTitle.textContent = app.title;
-    appDiv.appendChild(appTitle);
-
     let ul = document.createElement('ul');
+    for(let i = 0; i< app.length; i++){
+        
+        let li = document.createElement('li');
+        let userfName = document.createElement('blockquote');
+        let userlName = document.createElement('blockquote');
+        let userEmail = document.createElement('blockquote');
+        userfName.textContent = app[i].firstName;
+        userlName.textContent = app[i].lastName;
+        userEmail.textContent = app[i].email;
+        li.appendChild(userfName);
+        li.appendChild(userlName);
+        li.appendChild(userEmail);
+        ul.appendChild(li);
+    }
     appDiv.appendChild(ul);
-
-    let li = document.createElement('li');
-    li.textContent = 'Company Name:'+ app.companyName;
-    ul.appendChild(li);
-
-    li.textContent = 'Description:'+ app.description;
-    ul.appendChild(li);
-
-    li.textContent = 'State:'+ app.state;
-    ul.appendChild(li);
-
-    li.textContent = 'City:'+ app.city;
-    ul.appendChild(li);
-
-    // li.textContent = 'Zip Code:'+ app.zipCode;
-    // ul.appendChild(li);
 }
 
-function getApp(appId){
-    e.preventDefault();
-	let xhr = new XMLHttpRequest();
-	xhr.open('GET', 'api/applied/'+ appId, true);
 
+function getAllUsers(){
+	let xhr = new XMLHttpRequest();
+	xhr.open('GET', 'api/users', true);
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState === 4){
-			if(xhr.status === 200| xhr.status === 201){
+			if(xhr.status === 200 || xhr.status === 201){
 				let appInput = JSON.parse(xhr.responseText);
-                displayApp(appInput);
+                displayUsers(appInput);
                 console.log(appInput);
 			} else {
 				console.error('invalid request '+ xhr.status);
-			}
-		}
-		if(xhr.readyState === 4 && xhr.status !== 200){
-			console.error(xhr.status + ' : ' + xhr.responseText);
-		}
-	};
-	xhr.send();
+                error('invalid');
+            }
+        }
+	}
+	xhr.send(null);
+}
+function createUserForm(){
+    let addUserBtn = document.getElementById('addUser');
+    let div = document.getElementById('createUser');
+    let form = document.createElement('form');
+    form.name = 'createUserForm';
+
+
+    let firstName = document.createElement('input');
+    firstName.type = 'text';
+    firstName.name = 'firstName';
+    firstName.placeholder = 'Enter First Name';
+    form.appendChild(firstName);
+    form.appendChild(document.createElement('br'));
+
+    let lastName = document.createElement('input');
+    lastName.type = 'text';
+    lastName.name = 'lastName';
+    lastName.placeholder = 'Enter First Name';
+    form.appendChild(lastName);
+    form.appendChild(document.createElement('br'));
+
+
+    let email = document.createElement('input');
+    email.type = 'text';
+    email.name = 'email';
+    email.placeholder = 'Enter First Name';
+    form.appendChild(email);
+    form.appendChild(document.createElement('br'));
+
+    let password = document.createElement('input');
+    password.type = 'text';
+    password.name = 'password';
+    password.placeholder = 'Enter First Name';
+    form.appendChild(password);
+    form.appendChild(document.createElement('br'));
+
+    let username = document.createElement('input');
+    username.type = 'text';
+    username.name = 'username';
+    username.placeholder = 'Enter First Name';
+    form.appendChild(username);
+    form.appendChild(document.createElement('br'));
+
+
+    let submit = document.createElement('input');
+    submit.type = 'submit';
+    submit.name = 'submit';
+    submit.value = 'Submit';
+
+    
+    submit.addEventListener('click', addUser);
+    addUserBtn.removeEventListener('click', createUserForm);
+
 }
 
-function createApp(app){
+function addUser(e){
+    e.preventDefault();
+    let form = document.createUserForm;
+    let usr = {};
+    usr.title = form.title.value;
+    usr.description = form.description.value;
+    usr.companyName = form.companyName.value;
+    usr.state = form.state.value;
+    usr.city = form.city.value;
+    usr.zipCode = form.zipCode.value;
+    postUser(usr);
+}
+
+function postUser(usr){
+    let form = document.createUserForm;
+    let usrJSON = JSON.stringify(usr);
     let xhr = new XMLHttpRequest();
 	let uri = 'api/applied';
 	
@@ -97,27 +138,28 @@ function createApp(app){
 		if(xhr.readyState === 4){
 			if(xhr.status === 200 || xhr.status === 201){
 				let createdAppJSON = JSON.parse(xhr.responseText);
-				// displayApplications(createdAppJSON);
-				console.log(createdAppJSON);
+                console.log(createdAppJSON);
+                displayUsers(createdAppJSON);
 			}else {
 				if(xhr.status === 400){
 					console.error(xhr.status + ' : ' + xhr.responseText);
-					displayError(`invalid film data, <pre>${appJSON}</pre>`);
+					errors(`invalid film data, <pre>${appJSON}</pre>`);
 				} else{
 					displayError('invalid' + xhr.status);
 				}
 			}
 		}
     };  
-    console.log(app);
-    let appJSON = JSON.stringify(app);
-    xhr.send(appJSON);
+    console.log(usr+ ' -line 153');
+   
+    xhr.send(usrJSON);
+    form.reset();
 }
 
 
 
 /////////DELETE Appl////////
-function removeApp(appId){
+function removeUser(appId){
 	let uri = 'api/applied/' + appId;
 		let xhr = new XMLHttpRequest();
 		xhr.open('DELETE', uri, true);
@@ -136,4 +178,12 @@ function removeApp(appId){
 				};
 			xhr.send(null);
 		}
-	
+
+function errors(message){
+    let div = document.getElementById('applications');
+    let h1 = document.createElement('h3');
+    h1.textContent = message;
+    div.appendChild(h1);
+
+
+}

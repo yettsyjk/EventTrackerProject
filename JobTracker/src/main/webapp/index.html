@@ -11,11 +11,15 @@
     <h3>Keep Track of Your Job Applications</h3>
 
 <form name="appForm">
-    <label for="appId">Application: </label>
-   <input type="number" name="appId" placeholder="Enter App Id*"/>
-    <button type="lookup" name="button">Get Application Id</button>
+    <label for="userId">Application: </label>
+   <input type="number" name="userId" placeholder="Enter App Id*"/>
+    <input id="submit" type="submit" name="app"></button>
 </form>
 <br>
+<div id="createUser">
+    <button id="addUser">New Application</button>
+</div>
+
 <div class="output">
     <div id="appData"></div>
     <div id="appRemove"></div>
@@ -23,51 +27,8 @@
 
 
 <br>
-<form name="addForm">
-    <table>
-        <tbody>
-            <tr class="row">
-                <td for="title">Title: </td>
-                <td>
-                    <input type="text" name="title" placeholder="title">
-                </td>
-            </tr>
 
-            <tr class="row">
-                <td for="description">Description</td>
-                <td>
-                    <input type="text" name="description" placeholder="description">
-                </td>
-            </tr>
-            <tr class="row">
-                <td for="companyName">Company Name: </td>
-                <td>
-                    <input type="text" name="companyName" placeholder="companyName">
-                </td>
-            </tr>
-            <tr class="row">
-                <td for="state">State: </td>
-                <td>
-                    <input type="text" name="state" placeholder="state">
-                </td>
-            </tr>
-            <tr class="row">
-                <td for="city">City: </td>
-                <td>
-                    <input type="text" name="city" placeholder="city">
-                </td>
-            </tr>
-            <tr class="row">
-                <td for="zipCode">ZipCode: </td>
-                <td>
-                    <input type="number" name="zipCode" placeholder="zip code">
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <button action="submit" type="submit" name="submit">Submit</button>
-</form>
-
+<div id="applications"></div>
 
 
 </body>
