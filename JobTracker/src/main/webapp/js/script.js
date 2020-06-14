@@ -1,42 +1,48 @@
 window.addEventListener('load', function(){
 	console.log('you rang?');
-	init();
+    init();
+    // getAllUsers();
 	
 });
 function init(){
     console.log('test');
-    let addAppBtn = document.getElementById('addApp');
-    addAppBtn.addEventListener('click', createAppJS);
-    document.appForm.app.addEventListener('click', function(e){
+    let addUserBtn = document.getElementById('addUser');
+    addUserBtn.addEventListener('click', createUserForm);
+    
+    document.appForm.userId.addEventListener('click', function(e){
         e.preventDefault();
         let userId = document.appForm.userId.value;
         if(!isNaN(userId) && userId > 0){
-            getAllUsers(userId);
+            getUserById(userId);
         } 
     });
 }
-
-      
-function displayUsers(app){
-  
-    let appDiv = document.getElementById('applications');
-    appDiv.textContent = '';
-    let ul = document.createElement('ul');
-    for(let i = 0; i< app.length; i++){
-        
-        let li = document.createElement('li');
-        let userfName = document.createElement('blockquote');
-        let userlName = document.createElement('blockquote');
-        let userEmail = document.createElement('blockquote');
-        userfName.textContent = app[i].firstName;
-        userlName.textContent = app[i].lastName;
-        userEmail.textContent = app[i].email;
-        li.appendChild(userfName);
-        li.appendChild(userlName);
-        li.appendChild(userEmail);
-        ul.appendChild(li);
+function getUserById(userId){
+    let uri = `api/users/${userId}`;
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', uri, true);
+    xhr.onreadystatechange = function(){
+        if(xhr.readyState === 4){
+            if(xhr.status === 200){
+                let usr = JSON.parse(xhr.responseText);
+                console.log(usr);
+                displayUsers(usr);
+            } else {
+                error('invalid user');
+            }
+        }
     }
-    appDiv.appendChild(ul);
+    xhr.send(null);
+}
+      
+function displayUsers(usr){
+  
+    let appDiv = document.getElementById('users');
+    appDiv.textContent = '';
+
+    let user = document.createElement('h2');
+    user.textContent = usr.firstName;
+    div.appendChild(user);
 }
 
 
@@ -106,7 +112,7 @@ function createUserForm(){
     submit.name = 'submit';
     submit.value = 'Submit';
 
-    
+    div.appendChild(form);
     submit.addEventListener('click', addUser);
     addUserBtn.removeEventListener('click', createUserForm);
 
@@ -137,9 +143,9 @@ function postUser(usr){
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState === 4){
 			if(xhr.status === 200 || xhr.status === 201){
-				let createdAppJSON = JSON.parse(xhr.responseText);
-                console.log(createdAppJSON);
-                displayUsers(createdAppJSON);
+				let createdUsrJSON = JSON.parse(xhr.responseText);
+                console.log(createdUsrJSON);
+                displayUsers(createdUsrJSON);
 			}else {
 				if(xhr.status === 400){
 					console.error(xhr.status + ' : ' + xhr.responseText);
@@ -159,8 +165,8 @@ function postUser(usr){
 
 
 /////////DELETE Appl////////
-function removeUser(appId){
-	let uri = 'api/applied/' + appId;
+function removeUser(userId){
+	let uri = `api/users/${userId}`;
 		let xhr = new XMLHttpRequest();
 		xhr.open('DELETE', uri, true);
 		
@@ -184,6 +190,4 @@ function errors(message){
     let h1 = document.createElement('h3');
     h1.textContent = message;
     div.appendChild(h1);
-
-
 }
