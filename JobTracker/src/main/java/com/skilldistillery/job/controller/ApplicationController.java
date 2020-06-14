@@ -1,7 +1,6 @@
 package com.skilldistillery.job.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.skilldistillery.job.entities.Application;
+import com.skilldistillery.job.entities.User;
 import com.skilldistillery.job.services.ApplicationService;
 
 @RestController
@@ -68,8 +68,8 @@ public class ApplicationController {
 			response.setHeader("Location", url.toString());
 		}catch(Exception e) {
 			response.setStatus(404);
-			appl = null;
 			e.printStackTrace();
+			appl = null;
 		}
 		return appl;
 	}
@@ -79,6 +79,7 @@ public class ApplicationController {
 	public Application updateApplicationOnUser(@PathVariable("uId") Integer userId,
 			@PathVariable("appId") Integer applId,
 			@RequestBody Application appl,
+//			@RequestBody User user,
 			HttpServletResponse response,
 			HttpServletRequest request) {
 		try {

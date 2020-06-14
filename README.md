@@ -35,7 +35,7 @@
 
 ### Technologies Used
 * Java8 programming language
-* VanillaJS
+* VanillaJS front-end 
 * MySQL, MySQL Workbench for database management
 * JPA, JDBC
 * JUnit4 Testing
@@ -48,7 +48,7 @@
 
 ### Timeline
 * June 5, 2020 - June 7, 2020 - setup Postman testing Application and User tables
-* June 12, 202- - June 14, 2020 - setup webapps vanillaJS front-end
+* June 12, 2020 - June 14, 2020 - setup webapps vanillaJS front-end
 
 ### AWS EC2 Instance
 [JobTracker](http://3.23.55.198:8080/JobTracker/api/)
