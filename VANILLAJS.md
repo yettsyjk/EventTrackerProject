@@ -11,4 +11,7 @@
 * June 12, 2020 - June 14, 2020 - setup webapps vanillaJS front-end
 
 
+### AWS EC2 Instance
+[JobTracker](http://3.23.55.198:8080/JobTracker)
+
 [README](README.md) | [Yettsy](https://www.linkedin.com/in/yettsy-jo-knapp/) | [SCHEMA](SCHEMA.md)|
