@@ -27,12 +27,20 @@ export class RegisterComponent implements OnInit {
     this.authService.register(this.newUser).subscribe(
       data =>{
         console.log(data);
-        console.log(this.newUser.username);
-        console.log(this.newUser.password);
-        this.router.navigateByUrl('/home');
+        this.authService.login(this.newUser.username, this.newUser.password).subscribe(
+          loggedIn =>{
+            this.router.navigateByUrl('/home');
+            console.log(loggedIn);
+            console.log(this.newUser.username);
+            console.log(this.newUser.password);
+          },
+          notLoggedIn => {
+            console.log(notLoggedIn);
+          }
+        );
       },
       error => {
-        console.log(error);
+        console.error(error);
       }
     );
   }

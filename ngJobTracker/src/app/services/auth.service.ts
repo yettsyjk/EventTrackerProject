@@ -3,13 +3,14 @@ import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private baseUrl = 'http://localhost:8083/';
-
+  user: User = new User();
 
 
   constructor(
@@ -24,8 +25,8 @@ export class AuthService {
 
 
     register(user){
-      return this.http.post(`${this.baseUrl}regiser`, user).pipe(
-        tap((res)=> {
+      return this.http.post(`${this.baseUrl}register`, user).pipe(
+        tap((res) => {
           this.login(user.username, user.passowrd).subscribe(
             data => {
               this.router.navigateByUrl('/home');
@@ -45,13 +46,13 @@ export class AuthService {
       const token = this.generateBasicAuthToken(username, password);
       const headers = new HttpHeaders().set(
         'Authorization', `Basic ${token}`);
-      return this.http.get(`${this.baseUrl}authenticate`, {headers}).pipe(
+      return this.http.get(this.baseUrl + '/api/authenticate', {headers}).pipe(
         tap((res) => {
           localStorage.setItem('token', token);
           return res;
         }),
         catchError((err: any) => {
-            console.error(err);
+            console.error('logging in issues: ' + err);//issue is: [object Object]
             return throwError('error');
         })
       );
