@@ -18,7 +18,7 @@ export class JoblistComponent implements OnInit {
   selected = null;
   showComplete = false;
 
-  jobApps = JobApp[] = [];
+  jobApps: JobApp[] = [];
 
 
 
@@ -81,8 +81,8 @@ export class JoblistComponent implements OnInit {
   }
 
   getWarningLevel(){
-    let warningLevel = this.getJobAppCount();
-    if (warningLevel >=5){
+    const warningLevel = this.getJobAppCount();
+    if (warningLevel >= 5){
       return 'badge badge-danger';
     } else {
       return 'badge badge-success';
@@ -98,11 +98,11 @@ export class JoblistComponent implements OnInit {
       badNews => {
         console.error('err' + badNews);
       }
-    )
+    );
   }
 
     setEditJobApp(){
-      this.editJob = Object.assign({},
+      this.editJobApp = Object.assign({},
         this.selected);
     }
 
@@ -112,10 +112,10 @@ export class JoblistComponent implements OnInit {
         updated => {
           this.reload();
           this.selected = this.setEditJobApp;
-          this.editJob = null;
+          this.editJobApp = null;
         },
         failed => {
-          console.error('err'+ failed);
+          console.error('err' + failed);
           console.error(failed);
         }
       );

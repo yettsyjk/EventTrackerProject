@@ -7,6 +7,7 @@ export class JobApp {
   state: string;
   city: string;
   zipCode: number;
+  applyDate: string;
   enabled: boolean;
 
   constructor(
@@ -18,6 +19,7 @@ export class JobApp {
     state?: string,
     city?: string,
     zipCode?: number,
+    applyDate?: string,
     enabled?: boolean
   ){
   this.id = id;
@@ -28,6 +30,7 @@ export class JobApp {
   this.state = state;
   this.city = city;
   this.zipCode = zipCode;
+  this.applyDate = applyDate;
   this.enabled = enabled;
   };
 
