@@ -24,7 +24,7 @@ export class JobService {
   ) { }
 
   getHttpOptions() {
-    const credentials = this.authService.getToken();
+    const credentials = this.authService.getCredentials();
     const httpOptions = {
       headers: {
         Authorization: `Basic ${credentials}`,

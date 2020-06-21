@@ -36,10 +36,13 @@
 ### Technologies Used
 * Java8 programming language
 * VanillaJS front-end 
+* Angular Typescript
 * MySQL, MySQL Workbench for database management
 * JPA, JDBC
+* GRADLE and GRADLE Refresh like it is my best friend
 * JUnit4 Testing
-* SpringToolSuite4, Spring Boot, Spring REST web services
+* SpringToolSuite4, Spring Boot, Spring REST web services, Spring Security
+* HTML, CSS, Bootstrap library
 * Visual Studio Code for VanillaJS scripting
 * Postman for servside and clientside routing test
 * Zoom, Slack to comunicate remotely
@@ -47,8 +50,9 @@
 
 
 ### Timeline
-* June 5, 2020 - June 7, 2020 - setup Postman testing Application and User tables
-* June 12, 2020 - June 14, 2020 - setup webapps vanillaJS front-end
+* June 5, 2020 to June 7, 2020 - setup Postman testing Application and User tables
+* June 12, 2020 to June 14, 2020 - setup webapps vanillaJS front-end <-this was placed in a static file. I will need to rebuild this whole file after the course is over. VanillaJS is my major weakness and I need to improve significantly->
+* June 19, 2020 to June 21, 2020 - setup Angular for client side and app deployment on AWS EC2.
 
 ### AWS EC2 Instance
 [JobTracker](http://3.23.55.198:8080/JobTracker)
@@ -66,6 +70,7 @@
 1. Create, Read, Update, and DELETE routes through each controller.
 1. VanillaJS, this course spends a few days teaching a new language for front-end. VanillaJS seems very tedius and not as flexible as Java. Creating buttons and inputs should be easier and I can't imagine a company that utilizes it. However, knowing how vanillaJS works is necessary to understand Javascript fundamentals.
 1. Clientside, wanting to disable data seems to be a struggle for me as I thought that having the code in controllers made it easier and not understanding how javascript script.js disables the data.
+1. Clientside, Angular introduced and worked with for about 40 hours. It is wonderful how much Spring Security works with Angular for security on front-end. I have so much more to learn.
 
 
-[Schema](SCHEMA.md) |[VanillaJSProject](VANILLAJS.md)| [Yettsy](https://www.linkedin.com/in/yettsy-jo-knapp/) |
+[Schema](SCHEMA.md) |[VanillaJSProject](VANILLAJS.md)| [Yettsy](https://www.linkedin.com/in/yettsy-jo-knapp/) | [Angular](NG.md)

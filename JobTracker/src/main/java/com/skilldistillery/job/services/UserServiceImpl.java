@@ -4,8 +4,10 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.skilldistillery.job.entities.User;
 import com.skilldistillery.job.repositories.ApplicationRepository;
 import com.skilldistillery.job.repositories.UserRepository;
@@ -18,6 +20,10 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	ApplicationRepository appliRepo;
+	
+	////////trying to config User
+	@Autowired
+	private PasswordEncoder encoder;
 
 	@Override
 	public List<User> findAllUsers() {
@@ -73,4 +79,22 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
+	
+	///////////register while in Angular///////
+	@Override
+	public User register(String userJson){
+	  ObjectMapper mapper = new ObjectMapper();
+	  User user = null;
+	  try{
+		  user = mapper.readValue(userJson, User.class);
+	    String passwordEncode = encoder.encode(user.getPassword());
+	    user.setPassword(passwordEncode);
+	    
+	    userRepo.saveAndFlush(user);
+	  }
+	  catch(Exception e){
+	    e.printStackTrace();
+	  }
+	  return user;
+	}
 }

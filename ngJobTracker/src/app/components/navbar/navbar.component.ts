@@ -25,7 +25,7 @@ export class NavbarComponent implements OnInit {
 
 
   userProfile(){
-    const token = this.authService.getToken();
+    const token = this.authService.getCredentials();
     const passwordUser = atob(token);
     const usernameUser = passwordUser.split(':')[0];
     this.router.navigateByUrl(`userProfile/myProfile/${usernameUser}`);
