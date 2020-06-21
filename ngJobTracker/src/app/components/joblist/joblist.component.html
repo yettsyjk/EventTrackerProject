@@ -1,6 +1,6 @@
 <h1> {{title}}<span [ngClass]="getWarningLevel()">{{getJobAppCount()}}</span></h1>
 <button type="button" class="btn btn-primary">Tasks: <span class="badge badge-light">{{getJobAppCount()}}</span></button>
-
+<h2>Test space</h2>
 <form *ngIf="!selected" class="form form-inline">
   <label for="task">New Task:</label>
   <input class="form-control" type="text" name="task" [(ngModel)]="newAppJob.title" placeholder="Enter New Task*"/>

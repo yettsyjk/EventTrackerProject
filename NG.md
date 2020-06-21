@@ -16,4 +16,10 @@ and foreground command to Contrl+C to exit the app
 * June 12, 2020 to June 14, 2020 - setup webapps vanillaJS front-end <-this was placed in a static file. I will need to rebuild this whole file after the course is over. VanillaJS is my major weakness and I need to improve significantly->
 * June 19, 2020 to June 21, 2020 - setup Angular for client side and app deployment on AWS EC2.
 
+### Development server
+Run ng serve for a dev server. Navigate to http://localhost:4208/. The app will automatically reload if you change any of the source files.
+
+### Code scaffolding
+Run ng generate component component-name to generate a new component. You can also use ng generate directive|pipe|service|class|guard|interface|enum|module.
+
 [README](README.md) | [Yettsy](https://www.linkedin.com/in/yettsy-jo-knapp/) | [SCHEMA](SCHEMA.md)| [VANILLA](VANILLAJS.md)

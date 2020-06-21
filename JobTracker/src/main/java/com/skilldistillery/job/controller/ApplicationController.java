@@ -1,5 +1,6 @@
 package com.skilldistillery.job.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -110,6 +111,28 @@ public class ApplicationController {
 			e.printStackTrace();
 			response.setStatus(400);
 		}
+		
+	}
+	
+	public Application show(@PathVariable Integer appId,
+			HttpServletResponse response,
+			HttpServletRequest request,
+			Principal principal) {
+		Application appl = applSvc.show(principal.getName(), appId);
+		try {
+			
+			if(appl == null) {
+				response.setStatus(404);
+			} else {
+				response.setStatus(201);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			response.setStatus(400);
+			appl = null;
+		}
+		return appl;
+		
 		
 	}
 	

@@ -13,7 +13,7 @@ export class LoginComponent implements OnInit {
   user: User = new User();
   invalidLogin = false;
   loginSuccessful = false;
-  errMessage = 'Check Your Credentials';
+  errMessage = 'Error: Check Your Credentials';
   successMessage: string;
 
   constructor(

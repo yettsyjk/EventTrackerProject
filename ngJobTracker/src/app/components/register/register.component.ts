@@ -29,7 +29,7 @@ export class RegisterComponent implements OnInit {
         console.log(data);
         this.authService.login(this.newUser.username, this.newUser.password).subscribe(
           loggedIn => {
-            this.router.navigateByUrl('/home');
+            this.router.navigateByUrl('/job');
             console.log(loggedIn);
             console.log(this.newUser.username);
             console.log(this.newUser.password);

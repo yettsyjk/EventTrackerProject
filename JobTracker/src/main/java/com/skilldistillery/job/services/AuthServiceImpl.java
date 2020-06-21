@@ -10,6 +10,7 @@ import com.skilldistillery.job.repositories.UserRepository;
 
 @Service
 public class AuthServiceImpl implements AuthService {
+	
 	@Autowired
 	private UserRepository userRepo;
 	

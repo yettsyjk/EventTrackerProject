@@ -1,5 +1,6 @@
 package com.skilldistillery.job.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -106,5 +107,19 @@ public class UserController {
 			e.printStackTrace();
 			response.setStatus(400);
 		}
+	}
+	//////////username///////
+	@GetMapping("users/{username}")
+	public User viewUserProfile(@PathVariable String username,
+			Principal principal,
+			HttpServletRequest request,
+			HttpServletResponse response) {
+		User user = userSvc.show(username, principal.getName());
+		if (user != null) {
+			response.setStatus(200);
+			return userSvc.show(username, principal.getName());
+		}
+		response.setStatus(404);
+		return null;
 	}
 }

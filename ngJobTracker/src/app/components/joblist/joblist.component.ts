@@ -34,7 +34,7 @@ export class JoblistComponent implements OnInit {
 
   ) { }
 
-  ngOnInit(): void {
+  ngOnInit(){
     if (!this.authService.checkLogin()){
       this.router.navigateByUrl('/login');
     }

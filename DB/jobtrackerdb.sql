@@ -29,10 +29,11 @@ CREATE TABLE IF NOT EXISTS `user` (
   `create_date` DATETIME NULL,
   `update_date` DATETIME NULL,
   `enabled` TINYINT NULL DEFAULT 1,
-  `username` VARCHAR(100) NOT NULL,
-  `password` VARCHAR(200) NOT NULL,
-  `admin` TINYINT NOT NULL DEFAULT 0,
-  PRIMARY KEY (`id`))
+  `username` VARCHAR(100) NULL,
+  `password` VARCHAR(200) NULL,
+  `admin` TINYINT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `username_UNIQUE` (`username` ASC))
 ENGINE = InnoDB;
 
 
@@ -79,16 +80,16 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `jobtrackerdb`;
-INSERT INTO `user` (`id`, `first_name`, `last_name`, `email`, `role`, `create_date`, `update_date`, `enabled`, `username`, `password`, `admin`) VALUES (1, 'Bob', 'Sall', 'bs@gmail.com', 'user', '2020-06-04', '2020-06-04 13:00:00', 1, 'user1', 'p@ssword!23', DEFAULT);
-INSERT INTO `user` (`id`, `first_name`, `last_name`, `email`, `role`, `create_date`, `update_date`, `enabled`, `username`, `password`, `admin`) VALUES (2, 'Tim', 'Smith', 'ts@yahoo.com', 'user', '2020-06-04 13:00:00', '2020-06-04 13:00:00', 1, 'user2', 'p@ssword!23', DEFAULT);
-INSERT INTO `user` (`id`, `first_name`, `last_name`, `email`, `role`, `create_date`, `update_date`, `enabled`, `username`, `password`, `admin`) VALUES (3, 'Test', 'Courtney', 'bg@outlook.com', 'user', '2020-06-04 13:00:00', '2020-06-04 13:00:00', 1, 'user3', 'p@ssword!23', DEFAULT);
-INSERT INTO `user` (`id`, `first_name`, `last_name`, `email`, `role`, `create_date`, `update_date`, `enabled`, `username`, `password`, `admin`) VALUES (4, 'Bill', 'Hallibut', 'sall@tim.com', 'user', '2020-06-04 13:00:00', '2020-06-04 13:00:00', 1, 'user4', 'p@ssword!23', DEFAULT);
-INSERT INTO `user` (`id`, `first_name`, `last_name`, `email`, `role`, `create_date`, `update_date`, `enabled`, `username`, `password`, `admin`) VALUES (5, 'Tom', 'Rainz', 'grow@yahoo.com', 'user', '2020-06-04 13:00:00', '2020-06-04 13:00:00', 1, 'user5', 'p@ssword!23', DEFAULT);
-INSERT INTO `user` (`id`, `first_name`, `last_name`, `email`, `role`, `create_date`, `update_date`, `enabled`, `username`, `password`, `admin`) VALUES (6, 'Sally', 'Grown', 'bigsalt@outlook.com', 'user', '2020-06-04 13:00:00', '2020-06-04 13:00:00', 1, 'user6', 'p@ssword!23', DEFAULT);
-INSERT INTO `user` (`id`, `first_name`, `last_name`, `email`, `role`, `create_date`, `update_date`, `enabled`, `username`, `password`, `admin`) VALUES (7, 'Oprah', 'Salt', 'needmore@yahoo.com', 'user', '2020-06-04 13:00:00', '2020-06-04 13:00:00', 1, 'user7', 'p@ssword!23', DEFAULT);
-INSERT INTO `user` (`id`, `first_name`, `last_name`, `email`, `role`, `create_date`, `update_date`, `enabled`, `username`, `password`, `admin`) VALUES (8, 'Winfrey', 'Nick', 'tooltime@yahoo.com', 'user', '2020-06-04 13:00:00', '2020-06-04 13:00:00', 1, 'user8', 'p@ssword!23', DEFAULT);
-INSERT INTO `user` (`id`, `first_name`, `last_name`, `email`, `role`, `create_date`, `update_date`, `enabled`, `username`, `password`, `admin`) VALUES (9, 'Joseph', 'John', 's@yahoo.com', 'user', '2020-06-04 13:00:00', '2020-06-04 13:00:00', 1, 'user9', 'p@ssword!23', DEFAULT);
-INSERT INTO `user` (`id`, `first_name`, `last_name`, `email`, `role`, `create_date`, `update_date`, `enabled`, `username`, `password`, `admin`) VALUES (10, 'admin', 'Young', 'admin@yahoo.com', 'admin', '2020-06-04 13:00:00', '2020-06-04 13:00:00', 1, 'user10', 'p@ssword!23', DEFAULT);
+INSERT INTO `user` (`id`, `first_name`, `last_name`, `email`, `role`, `create_date`, `update_date`, `enabled`, `username`, `password`, `admin`) VALUES (1, 'Bob', 'Sall', 'bs@gmail.com', 'user', '2020-06-04', '2020-06-04 13:00:00', 1, 'user1', '$2a$10$4SMKDcs9jT18dbFxqtIqDeLEynC7MUrCEUbv1a/bhO.x9an9WGPvm', NULL);
+INSERT INTO `user` (`id`, `first_name`, `last_name`, `email`, `role`, `create_date`, `update_date`, `enabled`, `username`, `password`, `admin`) VALUES (2, 'Tim', 'Smith', 'ts@yahoo.com', 'user', '2020-06-04 13:00:00', '2020-06-04 13:00:00', 1, 'user2', '$2a$10$4SMKDcs9jT18dbFxqtIqDeLEynC7MUrCEUbv1a/bhO.x9an9WGPvm', NULL);
+INSERT INTO `user` (`id`, `first_name`, `last_name`, `email`, `role`, `create_date`, `update_date`, `enabled`, `username`, `password`, `admin`) VALUES (3, 'Test', 'Courtney', 'bg@outlook.com', 'user', '2020-06-04 13:00:00', '2020-06-04 13:00:00', 1, 'user3', '$2a$10$4SMKDcs9jT18dbFxqtIqDeLEynC7MUrCEUbv1a/bhO.x9an9WGPvm', NULL);
+INSERT INTO `user` (`id`, `first_name`, `last_name`, `email`, `role`, `create_date`, `update_date`, `enabled`, `username`, `password`, `admin`) VALUES (4, 'Bill', 'Hallibut', 'sall@tim.com', 'user', '2020-06-04 13:00:00', '2020-06-04 13:00:00', 1, 'user4', '$2a$10$4SMKDcs9jT18dbFxqtIqDeLEynC7MUrCEUbv1a/bhO.x9an9WGPvm', NULL);
+INSERT INTO `user` (`id`, `first_name`, `last_name`, `email`, `role`, `create_date`, `update_date`, `enabled`, `username`, `password`, `admin`) VALUES (5, 'Tom', 'Rainz', 'grow@yahoo.com', 'user', '2020-06-04 13:00:00', '2020-06-04 13:00:00', 1, 'user5', '$2a$10$4SMKDcs9jT18dbFxqtIqDeLEynC7MUrCEUbv1a/bhO.x9an9WGPvm', NULL);
+INSERT INTO `user` (`id`, `first_name`, `last_name`, `email`, `role`, `create_date`, `update_date`, `enabled`, `username`, `password`, `admin`) VALUES (6, 'Sally', 'Grown', 'bigsalt@outlook.com', 'user', '2020-06-04 13:00:00', '2020-06-04 13:00:00', 1, 'user6', '$2a$10$4SMKDcs9jT18dbFxqtIqDeLEynC7MUrCEUbv1a/bhO.x9an9WGPvm', NULL);
+INSERT INTO `user` (`id`, `first_name`, `last_name`, `email`, `role`, `create_date`, `update_date`, `enabled`, `username`, `password`, `admin`) VALUES (7, 'Oprah', 'Salt', 'needmore@yahoo.com', 'user', '2020-06-04 13:00:00', '2020-06-04 13:00:00', 1, 'user7', '$2a$10$4SMKDcs9jT18dbFxqtIqDeLEynC7MUrCEUbv1a/bhO.x9an9WGPvm', NULL);
+INSERT INTO `user` (`id`, `first_name`, `last_name`, `email`, `role`, `create_date`, `update_date`, `enabled`, `username`, `password`, `admin`) VALUES (8, 'Winfrey', 'Nick', 'tooltime@yahoo.com', 'user', '2020-06-04 13:00:00', '2020-06-04 13:00:00', 1, 'user8', '$2a$10$4SMKDcs9jT18dbFxqtIqDeLEynC7MUrCEUbv1a/bhO.x9an9WGPvm', NULL);
+INSERT INTO `user` (`id`, `first_name`, `last_name`, `email`, `role`, `create_date`, `update_date`, `enabled`, `username`, `password`, `admin`) VALUES (9, 'Joseph', 'John', 's@yahoo.com', 'user', '2020-06-04 13:00:00', '2020-06-04 13:00:00', 1, 'user9', '$2a$10$4SMKDcs9jT18dbFxqtIqDeLEynC7MUrCEUbv1a/bhO.x9an9WGPvm', NULL);
+INSERT INTO `user` (`id`, `first_name`, `last_name`, `email`, `role`, `create_date`, `update_date`, `enabled`, `username`, `password`, `admin`) VALUES (10, 'admin', 'Young', 'admin@yahoo.com', 'admin', '2020-06-04 13:00:00', '2020-06-04 13:00:00', 1, 'user10', '$2a$10$4SMKDcs9jT18dbFxqtIqDeLEynC7MUrCEUbv1a/bhO.x9an9WGPvm', NULL);
 
 COMMIT;
 

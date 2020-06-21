@@ -97,4 +97,10 @@ public class UserServiceImpl implements UserService {
 	  }
 	  return user;
 	}
+
+	@Override
+	public User show(String username, String principalUsername) {
+		User user = userRepo.findByUsername(username);
+		return userRepo.findByIdAndUsername(user.getId(), user.getUsername());
+	}
 }

@@ -19,4 +19,6 @@ public interface UserService {
 	boolean deleteUserById(Integer id); 
 	
 	User register(String userJson);
+	
+	User show(String username, String principalUsername);
 }

@@ -12,7 +12,7 @@ import { throwError } from 'rxjs';
 })
 export class JobService {
   private baseUrl = 'http://localhost:8085';
-  private url = this.baseUrl + 'api';
+  private url = this.baseUrl + 'api/job';
 
 
 
@@ -35,31 +35,33 @@ export class JobService {
   }
 
   index(){
-  return this.http.get<JobApp[]>(this.url, this.getHttpOptions()).pipe(
+  return this.http.get<JobApp[]>(this.url).pipe(
     catchError((err: any) => {
       console.error(err);
-      return throwError('err' + err);
+      return throwError('jobservice.ts index route retrieving jobs err: ' + err);
       })
     );
   }
 
 
-  create(jobApp: JobApp){
-    jobApp.enabled = false;
-    jobApp.description = '';
-    return this.http.post<JobApp>(this.url, jobApp, this.getHttpOptions()).pipe(
+  create(newJobApp){
+    newJobApp.enabled = false;
+    newJobApp.description = '';
+    if (this.authService.checkLogin()){
+    return this.http.post<JobApp>(this.url, newJobApp, this.getHttpOptions()).pipe(
       catchError((err: any) => {
         console.error(err);
-        return throwError('err' + err);
+        return throwError('jobservice.ts create route err: ' + err);
       })
     );
+    }
   }
 
   show(jobAppId: number) {
     return this.http.get<JobApp>(`${this.url}/${jobAppId}`, this.getHttpOptions()).pipe(
       catchError((err: any) => {
         console.error(err);
-        return throwError('err' + err);
+        return throwError('jobservice.ts show route err: ' + err);
       })
     );
   }
@@ -70,8 +72,12 @@ export class JobService {
     } else {
       jobApp.applyDate = '';
     }
-    return this.http.put<JobApp>(`${this.url}/${jobApp.id}`, jobApp, this.getHttpOptions()).pipe(
-
+    return this.http.put<JobApp>(`${this.url}/${jobApp.id}`, jobApp,
+     this.getHttpOptions()).pipe(
+      catchError((err: any) => {
+        console.error(err);
+        return throwError('jobservice.ts update route err: ' + err);
+      })
     );
   }
 
@@ -80,7 +86,7 @@ export class JobService {
     return this.http.delete(`${this.url}/${id}`, httpOptions).pipe(
       catchError((err: any) => {
         console.error(err);
-        return throwError('err' + err);
+        return throwError('jobservice.ts destroy route err: ' + err);
       })
     );
   }

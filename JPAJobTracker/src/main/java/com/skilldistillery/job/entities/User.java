@@ -37,13 +37,13 @@ public class User {
 	private String username;
 	private String password;
 	
-	@NotNull
+	
 	private boolean enabled;
 	
 	private boolean admin;
 	
 	@OneToMany(mappedBy="user")
-	private List<Application> appl;
+	private List<Application> jobApps;
 	
 	
 	//////////////////////
@@ -80,7 +80,7 @@ public class User {
 	
 public User(int id, String firstName, String lastName, String email, String role, LocalDateTime createDate,
 			LocalDateTime updateDate, String username, String password, boolean enabled, boolean admin,
-			List<Application> appl) {
+			List<Application> jobApps) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
@@ -93,16 +93,16 @@ public User(int id, String firstName, String lastName, String email, String role
 		this.password = password;
 		this.enabled = enabled;
 		this.admin = admin;
-		this.appl = appl;
+		this.jobApps = jobApps;
 	}
 
 ///////////////////////
 	
-	public List<Application> getAppl() {
-		return appl;
+	public List<Application> getJobApps() {
+		return jobApps;
 	}
-	public void setAppl(List<Application> appl) {
-		this.appl = appl;
+	public void setJobApps(List<Application> jobApps) {
+		this.jobApps = jobApps;
 	}
 	public int getId() {
 		return id;

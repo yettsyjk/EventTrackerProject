@@ -22,4 +22,6 @@ public interface ApplicationService {
 	Application findByApplicationById(Integer userId);
 	
 	List<Application> findByTitleContaining(String title);
+	
+	Application show(String username, int appId);
 }

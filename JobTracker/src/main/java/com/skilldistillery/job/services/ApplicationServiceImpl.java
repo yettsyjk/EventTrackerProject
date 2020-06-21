@@ -82,5 +82,10 @@ public class ApplicationServiceImpl implements ApplicationService {
 		applRepo.deleteById(applId);
 		return null;
 	}
+/////////////////USERNAME//////////////
+	@Override
+	public Application show(String username, int appId) {	
+		return applRepo.findByIdAndUserUsername(appId, username);
+	}
 
 }

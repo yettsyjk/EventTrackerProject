@@ -3,6 +3,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { User } from 'src/app/models/user';
+import { JobService } from 'src/app/services/job.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -21,6 +22,7 @@ export class UserProfileComponent implements OnInit {
       private router: Router,
       private userService: UserService,
       private route: ActivatedRoute,
+      private jobService: JobService
   ) { }
 
   ngOnInit() {
@@ -34,7 +36,7 @@ export class UserProfileComponent implements OnInit {
     },
     error => {
       this.router.navigateByUrl('/home');
-      console.log(error);
+      console.error(error);
     }
   );
   this.getUserData();

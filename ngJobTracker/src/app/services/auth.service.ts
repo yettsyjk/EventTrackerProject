@@ -10,7 +10,7 @@ import { User } from '../models/user';
 })
 export class AuthService {
   private baseUrl = 'http://localhost:8083/';
-  user: User = new User();
+  // user: User = new User();
 
 
   constructor(
@@ -28,8 +28,18 @@ export class AuthService {
     // create request to register a new account
     return this.http.post(this.baseUrl + 'register', user)
     .pipe(
+      tap((res) => {
+        this.login(user.username, user.password).subscribe(
+          data => {
+            this.router.navigateByUrl('/home');
+          },
+          error => {
+            console.error(error);
+          }
+        );
+      }),
       catchError((err: any) => {
-        console.log(err);
+        console.error(err);
         return throwError('AuthService.register(): error registering user.');
       })
     );
@@ -80,7 +90,7 @@ export class AuthService {
 
 
     logout(){
-      localStorage.removeItem('token');
+      localStorage.removeItem('credentials');
     }
 
 
