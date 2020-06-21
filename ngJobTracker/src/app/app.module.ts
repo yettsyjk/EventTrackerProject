@@ -19,6 +19,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { LogoutComponent } from './components/logout/logout.component';
 import { JoblistComponent } from './components/joblist/joblist.component';
 import { JobPipe } from './pipes/job.pipe';
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
 
 
 
@@ -37,6 +38,7 @@ import { JobPipe } from './pipes/job.pipe';
     LogoutComponent,
     JoblistComponent,
     JobPipe,
+    UserProfileComponent,
   ],
   imports: [
     BrowserModule,

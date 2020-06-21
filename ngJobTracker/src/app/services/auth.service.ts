@@ -39,16 +39,12 @@ export class AuthService {
       // Make credentials
       const credentials = this.generateBasicAuthCredentials(username, password);
       // Send credentials as Authorization header (this is spring security convention for basic auth)
-      const httpOptions = {
-        headers: new HttpHeaders({
-          'Authorization': `Basic ${credentials}`,
-          'X-Requested-With': 'XMLHttpRequest'
-        })
-      };
+      const headers = new HttpHeaders().set(
+          'Authorization', `Basic ${credentials}`);
 
       // create request to authenticate credentials
       return this.http
-        .get(this.baseUrl + 'authenticate', httpOptions)
+        .get(this.baseUrl + 'authenticate', {headers})
         .pipe(
           tap((res) => {
             localStorage.setItem('credentials' , credentials);

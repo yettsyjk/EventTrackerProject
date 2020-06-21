@@ -92,6 +92,7 @@ export class JoblistComponent implements OnInit {
   addJobApp(jobApp: JobApp ){
     this.jobService.create(this.newAppJob).subscribe(
       data => {
+        console.log(data);
         this.newAppJob = new JobApp();
         this.reload();
       },

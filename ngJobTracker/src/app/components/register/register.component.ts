@@ -25,10 +25,10 @@ export class RegisterComponent implements OnInit {
 
   register() {
     this.authService.register(this.newUser).subscribe(
-      data =>{
+      data => {
         console.log(data);
         this.authService.login(this.newUser.username, this.newUser.password).subscribe(
-          loggedIn =>{
+          loggedIn => {
             this.router.navigateByUrl('/home');
             console.log(loggedIn);
             console.log(this.newUser.username);

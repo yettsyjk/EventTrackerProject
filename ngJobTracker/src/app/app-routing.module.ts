@@ -8,6 +8,7 @@ import { LoginComponent } from './components/login/login.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { RegisterComponent } from './components/register/register.component';
 import { JoblistComponent } from './components/joblist/joblist.component';
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
 
 
 const routes: Routes = [
@@ -20,6 +21,9 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'userprofile', component: UserProfileComponent },
+  { path: 'userprofile/myprofile/:id', component: UserProfileComponent },
+
   { path: '**', component: NotFoundComponent }
 ];
 

@@ -29,7 +29,7 @@ export class UserService {
   }
 
 
-  findByUsername(username){
+  findUserByUsername(username){
     const token = this.authService.getCredentials();
     const headers = new HttpHeaders().set(
       'Authorization', `Basic ${token}`

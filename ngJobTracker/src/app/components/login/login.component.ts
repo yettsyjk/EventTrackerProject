@@ -11,7 +11,10 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class LoginComponent implements OnInit {
   user: User = new User();
-
+  invalidLogin = false;
+  loginSuccessful = false;
+  errMessage = 'Check Your Credentials';
+  successMessage: string;
 
   constructor(
     private authService: AuthService,
@@ -25,10 +28,15 @@ export class LoginComponent implements OnInit {
   login(user) {
     this.authService.login(user.username, user.password).subscribe(
       data => {
-        this.router.navigateByUrl('/home');
+        this.invalidLogin = false;
+        this.loginSuccessful = true;
+        this.successMessage = 'success';
+        this.router.navigateByUrl('/job');
         console.log(data + ' log in');
       },
       oops => {
+        this.invalidLogin = true;
+        this.loginSuccessful = false;
         console.log('login err: ' + oops);
       }
     );

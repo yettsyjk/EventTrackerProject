@@ -1,5 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" [routerLink]="['/home']">JobTracker</a>
+
+  <a class="navbar-brand" [routerLink]="['/home']">JobTracker<img src="https://img.icons8.com/officel/2x/new-job.png" alt="JobApp Logo"></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -13,7 +14,7 @@
         <a class="nav-link" [routerLink]="['/login']">Login <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" [routerLink]="['/todo']">TodoList <span class="sr-only">(current)</span></a>
+        <a class="nav-link" [routerLink]="['/job']">Job App List <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
         <a class="nav-link" [routerLink]="['/about']">About</a>
@@ -28,7 +29,9 @@
       <li class="nav-item">
         <a class="nav-link" (click)="userProfile()">Profile</a>
       </li>
-
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/logout']">Logout</a>
+      </li>
       <!-- <li><app-logout></app-logout></li> -->
     </ul>
     <form class="form-inline my-2 my-lg-0">
