@@ -13,9 +13,6 @@
       <li class="nav-item active">
         <a class="nav-link" [routerLink]="['/login']">Login <span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item active">
-        <a class="nav-link" [routerLink]="['/job']">Job App List <span class="sr-only">(current)</span></a>
-      </li>
       <li class="nav-item">
         <a class="nav-link" [routerLink]="['/about']">About</a>
       </li>
@@ -27,7 +24,7 @@
     <div *ngIf="checkLogin()" class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="nav navbar-nav navbar-right line-inline">
       <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/userProfile']">Profile</a>
+        <a class="nav-link" [routerLink]="['/userprofile']">Profile</a>
       </li>
       <li class="nav-item active">
         <a class="nav-link" [routerLink]="['/job']">Job App List <span class="sr-only">(current)</span></a>

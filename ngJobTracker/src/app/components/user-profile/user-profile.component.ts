@@ -27,7 +27,7 @@ export class UserProfileComponent implements OnInit {
 
   ngOnInit() {
   if (!this.authService.checkLogin()){
-    this.router.navigateByUrl('/home');
+    this.router.navigateByUrl('/userprofile');
   }
   this.userService.findUserByUsername(this.authService.getLoggedInUsername()).subscribe(
     data => {
@@ -39,13 +39,13 @@ export class UserProfileComponent implements OnInit {
       console.error(error);
     }
   );
-  this.getUserData();
+  this.getUserDetails();
   }
 
 
 
 
-  getUserData(){
+  getUserDetails(){
     this.userService.findUserByUsername(this.route.snapshot.paramMap.get('id')).subscribe(
       data => {
         console.log(data);
