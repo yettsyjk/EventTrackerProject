@@ -14,7 +14,7 @@ import { environment } from 'src/environments/environment';
 export class JobService {
   private baseUrl = 'http://localhost:8083';
   // private url = this.baseUrl + 'api/applied';
-  private url = environment.baseUrl + 'api/applied';
+  private url = environment.baseUrl + 'api/applied';//for AWS EC2 deployment
 
 
   constructor(

@@ -12,7 +12,8 @@ import { environment } from 'src/environments/environment';
 export class UserService {
 
   // private baseUrl = 'http://localhost:8083/' + 'api';
-  private baseUrl = environment.baseUrl  + 'api';
+  private baseUrl = environment.baseUrl  + 'api';//for AWS EC2 deployment
+
   constructor(
     private http: HttpClient,
     private authService: AuthService

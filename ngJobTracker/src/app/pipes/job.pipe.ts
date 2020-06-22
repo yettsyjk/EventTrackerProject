@@ -13,7 +13,7 @@ export class JobPipe implements PipeTransform {
       return jobApps;
     }
     for (let i = 0; i < jobApps.length; i++){
-      if(!jobApps[i].enabled){
+      if (!jobApps[i].enabled){
         result.push(jobApps[i]);
         console.log(jobApps[i]);
       }

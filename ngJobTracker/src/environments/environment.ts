@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   baseUrl: 'http://localhost:8083'
-};
+};//for AWS EC2 deployment
 
 /*
  * For easier debugging in development mode, you can import the following file
