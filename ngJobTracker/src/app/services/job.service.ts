@@ -6,14 +6,15 @@ import { JobApp } from 'src/app/models/job-app';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class JobService {
   private baseUrl = 'http://localhost:8083';
-  private url = this.baseUrl + 'api/applied';
-
+  // private url = this.baseUrl + 'api/applied';
+  private url = environment.baseUrl + 'api/applied';
 
 
   constructor(
