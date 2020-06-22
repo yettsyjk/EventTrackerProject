@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
 import { UserService } from './user.service';
 import { DatePipe } from '@angular/common';
-import { JobApp } from '../models/job-app';
+import { JobApp } from 'src/app/models/job-app';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
@@ -12,7 +12,7 @@ import { throwError } from 'rxjs';
 })
 export class JobService {
   private baseUrl = 'http://localhost:8083';
-  private url = this.baseUrl + 'api/job';
+  private url = this.baseUrl + 'api/applied';
 
 
 

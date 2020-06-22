@@ -2,6 +2,7 @@ package com.skilldistillery.job.services;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,12 +48,14 @@ public class ApplicationServiceImpl implements ApplicationService {
 
 	//////////////////CREATE APPLICATION////////////////
 	@Override
-	public Application createApplicationOnUser(Integer id, Application appl) {
-		Optional<User> createdUser = userRepo.findById(id);
-		if (createdUser.isPresent()) {
-			appl.setUser(createdUser.get());
+	public Application createApplicationOnUser(String username, Application appl) {
+		User createdUser = userRepo.findByUsername(username);
+		if (createdUser != null) {
+			appl.setUser(createdUser);
+			applRepo.saveAndFlush(appl);
+			return appl;
 		}
-		return appl;
+		return null;
 	}
 	
 	//////////////////UPDATE APPLICATION////////////////
@@ -86,6 +89,12 @@ public class ApplicationServiceImpl implements ApplicationService {
 	@Override
 	public Application show(String username, int appId) {	
 		return applRepo.findByIdAndUserUsername(appId, username);
+	}
+
+	////////index set added to repair bug
+	@Override
+	public Set<Application> index(String username) {
+		return applRepo.findByUserUsername(username);
 	}
 
 }

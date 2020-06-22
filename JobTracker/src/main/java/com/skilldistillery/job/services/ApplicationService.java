@@ -1,6 +1,7 @@
 package com.skilldistillery.job.services;
 
 import java.util.List;
+import java.util.Set;
 
 import com.skilldistillery.job.entities.Application;
 
@@ -13,7 +14,7 @@ public interface ApplicationService {
 	
 	List<Application> findByUserId(Integer id);
 	
-	Application createApplicationOnUser(Integer id, Application appl);
+	Application createApplicationOnUser(String username, Application appl);
 	
 	Application updateApplicationOnUser(Integer userId, Integer applId, Application appl );
 
@@ -24,4 +25,6 @@ public interface ApplicationService {
 	List<Application> findByTitleContaining(String title);
 	
 	Application show(String username, int appId);
+	
+	Set<Application> index(String username);
 }

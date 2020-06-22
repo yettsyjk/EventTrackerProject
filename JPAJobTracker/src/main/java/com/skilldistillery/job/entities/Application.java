@@ -15,8 +15,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 
 @Entity
-@Table(name="application")
 public class Application {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -48,7 +48,7 @@ public class Application {
 	@NotNull
 	private boolean enabled;
 	
-	@JsonIgnore
+	
 	@ManyToOne
 	@JoinColumn(name="user_id")
 	private User user;

@@ -2,6 +2,7 @@ package com.skilldistillery.job.controller;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.skilldistillery.job.entities.Application;
 import com.skilldistillery.job.services.ApplicationService;
+import com.skilldistillery.job.services.UserService;
 
 @CrossOrigin({"*", "http://localhost:4208"})
 @RestController
@@ -27,6 +29,10 @@ public class ApplicationController {
 	
 	@Autowired
 	private ApplicationService applSvc;
+	
+	
+	@Autowired
+	private UserService userSvc;
 	
 	@GetMapping("good")
 	public String ping() {
@@ -61,13 +67,21 @@ public class ApplicationController {
 	public Application createApplication(@PathVariable Integer id,
 			@RequestBody Application appl,
 			HttpServletResponse response,
-			HttpServletRequest request){
+			HttpServletRequest request,
+			Principal principal){
 		try {
-			appl = applSvc.createApplicationOnUser(id, appl);
+//			appl = applSvc.createApplicationOnUser(id, appl);
+			appl = applSvc.createApplicationOnUser(principal.getName(), appl);
+			if (appl == null) {
+				response.setStatus(404);
+			}else {
+			
 			response.setStatus(201);
 			StringBuffer url = request.getRequestURL();
 			url.append("/").append(appl.getId());
 			response.setHeader("Location", url.toString());
+			
+			}
 		}catch(Exception e) {
 			response.setStatus(404);
 			e.printStackTrace();
@@ -115,27 +129,39 @@ public class ApplicationController {
 		
 	}
 	
-	public Application show(@PathVariable Integer appId,
-			HttpServletResponse response,
-			HttpServletRequest request,
-			Principal principal) {
-		Application appl = applSvc.show(principal.getName(), appId);
-		try {
-			
-			if(appl == null) {
-				response.setStatus(404);
-			} else {
-				response.setStatus(201);
-			}
-		}catch(Exception e) {
-			e.printStackTrace();
-			response.setStatus(400);
-			appl = null;
-		}
-		return appl;
-		
-		
-	}
+//	@GetMapping("applied")
+//	public Set<Application> index(
+//			HttpServletRequest request,
+//			HttpServletResponse respoonse,
+//			Principal principal){
+//		return applSvc.index(principal.getName());
+//	}
+//	
+//	
+//	
+//	
+//	@GetMapping("applied/{appId}")
+//	public Application show(@PathVariable Integer appId,
+//			HttpServletResponse response,
+//			HttpServletRequest request,
+//			Principal principal) {
+//		Application appl = applSvc.show(principal.getName(), appId);
+//		try {
+//			
+//			if(appl == null) {
+//				response.setStatus(404);
+//			} else {
+//				response.setStatus(201);
+//			}
+//		}catch(Exception e) {
+//			e.printStackTrace();
+//			response.setStatus(400);
+//			appl = null;
+//		}
+//		return appl;
+//		
+//		
+//	}
 	
 	
 }

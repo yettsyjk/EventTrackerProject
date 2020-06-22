@@ -1,6 +1,7 @@
 package com.skilldistillery.job.repositories;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -15,4 +16,7 @@ public interface ApplicationRepository extends JpaRepository<Application, Intege
 	Application findApplicationById(Integer id);
 	
 	Application findByIdAndUserUsername(int id, String username);
+	
+	Set<Application> findByUserUsername(String username);
+
 }

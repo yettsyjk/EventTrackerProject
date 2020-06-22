@@ -10,7 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import com.sun.istack.NotNull;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class User {
@@ -42,6 +42,7 @@ public class User {
 	
 	private boolean admin;
 	
+	@JsonIgnore//will not inlcude JSON data
 	@OneToMany(mappedBy="user")
 	private List<Application> jobApps;
 	
