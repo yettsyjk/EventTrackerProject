@@ -17,8 +17,11 @@ export class JoblistComponent implements OnInit {
   newAppJob = new JobApp();
   selected = null;
   showComplete = false;
+  total = null;
+  totalCompleted = null;
 
   jobApps: JobApp[] = [];
+  jobAppsCompleted: JobApp[] = [];
 
 
 
@@ -34,33 +37,40 @@ export class JoblistComponent implements OnInit {
 
   ) { }
 
-  ngOnInit(){
-    if (!this.authService.checkLogin()){
-      this.router.navigateByUrl('/login');
+    ngOnInit(): void{
+      this.loadJobApps();
     }
-    if (!this.selected && this.route.snapshot.paramMap.get('id')){
-        const jobAppIdParam = this.route.snapshot.paramMap.get('id');
-        const jobAppId = parseInt(jobAppIdParam, 10);
-        this.jobService.show(jobAppId).subscribe(
-          jobApp => {
-            this.selected = jobApp;
-          },
-          oops => {
-            console.error('oops' + oops);
-            this.router.navigateByUrl('oops');
-          }
-        );
-      } else {
-        this.reload();
-      }
+  // ngOnInit(){
+  //   if (!this.authService.checkLogin()){
+  //     this.router.navigateByUrl('/login');
+  //   }
+  //   if (!this.selected && this.route.snapshot.paramMap.get('id')){
+  //       const jobAppIdParam = this.route.snapshot.paramMap.get('id');
+  //       const jobAppId = parseInt(jobAppIdParam, 10);
+  //       this.jobService.show(jobAppId).subscribe(
+  //         jobApp => {
+  //           this.selected = jobApp;
+  //         },
+  //         oops => {
+  //           console.error('oops' + oops);
+  //           this.router.navigateByUrl('oops');
+  //         }
+  //       );
+  //     } else {
+  //       this.reload();
+  //     }
+  // }
+  totalJobApps(){
+    this.total = this.jobApps.length;
   }
 
-  reload(){
+  loadJobApps(){
     this.jobService.index().subscribe(
       reloadApp => {
         this.jobApps = reloadApp;
         this.editJobApp = null;
         this.selected = null;
+        this.totalJobApps();
       },
       err => {
         console.error(err);
@@ -68,12 +78,13 @@ export class JoblistComponent implements OnInit {
     );
   }
 
-  displayJobApp(jobApp){
+  displayJobApp(jobApp: JobApp){
     this.selected = jobApp;
   }
 
   displayTable(){
     this.selected = null;
+    this.editJobApp = null;
     console.log('tableSelected');
   }
   getJobAppCount(){
@@ -94,7 +105,7 @@ export class JoblistComponent implements OnInit {
       data => {
         console.log(data);
         this.newAppJob = new JobApp();
-        this.reload();
+        this.loadJobApps();
       },
       badNews => {
         console.error('err' + badNews);
@@ -111,7 +122,7 @@ export class JoblistComponent implements OnInit {
       console.log(jobApp);
       this.jobService.update(jobApp).subscribe(
         updated => {
-          this.reload();
+          this.loadJobApps();
           this.selected = this.setEditJobApp;
           this.editJobApp = null;
         },
@@ -125,12 +136,14 @@ export class JoblistComponent implements OnInit {
   deleteJobApp(id: number) {
     this.jobService.destroy(id).subscribe(
       yay => {
-        this.reload();
+        this.loadJobApps();
+        console.log('successful removed job app');
       },
       oops => {
         console.error('err' + oops);
       }
     );
+    this.selected = null;
   }
 
 

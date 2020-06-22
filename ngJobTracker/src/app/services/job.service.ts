@@ -72,7 +72,7 @@ export class JobService {
     } else {
       jobApp.applyDate = '';
     }
-    return this.http.put<JobApp>(`${this.url}/${jobApp.id}`, jobApp,
+    return this.http.put<JobApp>(this.url + '/' + jobApp.id, jobApp,
      this.getHttpOptions()).pipe(
       catchError((err: any) => {
         console.error(err);
@@ -83,7 +83,7 @@ export class JobService {
 
   destroy(id: number) {
     const httpOptions = this.getHttpOptions();
-    return this.http.delete(`${this.url}/${id}`, httpOptions).pipe(
+    return this.http.delete(this.url +  '/' + id, httpOptions).pipe(
       catchError((err: any) => {
         console.error(err);
         return throwError('jobservice.ts destroy route err: ' + err);

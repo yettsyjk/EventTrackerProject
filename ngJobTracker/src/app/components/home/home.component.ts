@@ -21,18 +21,18 @@ export class HomeComponent implements OnInit {
   }
 
   userProfile(username){
-    this.router.navigateByUrl(`userProfile/${username}`);
+    this.router.navigateByUrl(`userprofile/${username}`);
   }
 
-  register(form: NgForm) {
-    this.registerComp.register();
-  }
+  // register(form: NgForm) {
+  //   this.registerComp.register();
+  // }
 
-  checkLoggedInUser(): boolean {
-    if (this.authService.checkLogin()){
-      return true;
-    } else {
-      return false;
-    }
-  }
+  // checkLoggedInUser(): boolean {
+  //   if (this.authService.checkLogin()){
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
 }
