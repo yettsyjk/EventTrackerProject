@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-  newUser: User;
+  newUser = new User();
 
   constructor(
     private userService: UserService,
@@ -18,29 +18,31 @@ export class RegisterComponent implements OnInit {
     private router: Router
   ) { }
 
-  ngOnInit() {
-    this.newUser = new User();
+  ngOnInit(): void {
+    console.log('register component');
   }
 
 
-  register() {
-    this.authService.register(this.newUser).subscribe(
+  register(user: User) {
+    console.log(user);
+    this.authService.register(user).subscribe(
       data => {
         console.log(data);
-        this.authService.login(this.newUser.username, this.newUser.password).subscribe(
+        this.authService.login(user.username, user.password).subscribe(
           loggedIn => {
-            this.router.navigateByUrl('/job');
+            this.router.navigateByUrl('home');
             console.log(loggedIn);
-            console.log(this.newUser.username);
-            console.log(this.newUser.password);
+            console.log('username: ' + user.username);
+            console.log('password: ' + user.password);
           },
           notLoggedIn => {
-            console.log(notLoggedIn);
+            console.error('Register component error');
+            console.error(notLoggedIn);
           }
         );
       },
-      error => {
-        console.error(error);
+      majorError => {
+        console.error('Register component: ' + majorError);
       }
     );
   }

@@ -41,13 +41,11 @@ public class Application {
 	private String state;
 	private String city;
 	
+	private Boolean enabled;
+	
 	@NotNull
 	@Column(name="zip_code")
 	private String zipCode;
-	
-	@NotNull
-	private boolean enabled;
-	
 	
 	@ManyToOne
 	@JoinColumn(name="user_id")
@@ -71,7 +69,6 @@ public class Application {
 		this.state = state;
 		this.city = city;
 		this.zipCode = zipCode;
-		this.enabled = enabled;
 	}
 
 	public Application(int id, String title, String companyName, LocalDateTime applyDate, LocalDateTime createDate,
@@ -88,7 +85,6 @@ public class Application {
 		this.state = state;
 		this.city = city;
 		this.zipCode = zipCode;
-		this.enabled = enabled;
 		this.user = user;
 	}
 
@@ -172,13 +168,6 @@ public class Application {
 		this.zipCode = zipCode;
 	}
 
-	public boolean isEnabled() {
-		return enabled;
-	}
-
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
-	}
 
 	public User getUser() {
 		return user;
@@ -188,12 +177,20 @@ public class Application {
 		this.user = user;
 	}
 
+	public Boolean getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
+	
 	@Override
 	public String toString() {
 		return "Application [id=" + id + ", title=" + title + ", companyName=" + companyName + ", applyDate="
 				+ applyDate + ", createDate=" + createDate + ", description=" + description + ", contactName="
-				+ contactName + ", state=" + state + ", city=" + city + ", zipCode=" + zipCode + ", enabled=" + enabled
-				+ "]";
+				+ contactName + ", state=" + state + ", city=" + city + ", enabled=" + enabled + ", zipCode=" + zipCode
+				+ ", user=" + user + "]";
 	}
 
 	@Override
@@ -217,13 +214,6 @@ public class Application {
 			return false;
 		return true;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 }

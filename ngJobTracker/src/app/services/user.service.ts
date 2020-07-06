@@ -11,8 +11,8 @@ import { environment } from 'src/environments/environment';
 })
 export class UserService {
 
-  // private baseUrl = 'http://localhost:8083/' + 'api';
-  private baseUrl = environment.baseUrl  + 'api';//for AWS EC2 deployment
+  // private baseUrl = 'http://localhost:8083/' + 'api/users';
+  private baseUrl = environment.baseUrl  + 'api/users';//for AWS EC2 deployment
 
   constructor(
     private http: HttpClient,
@@ -21,30 +21,93 @@ export class UserService {
 
 
 
-  findUserById(id){
-    return this.http.get<User>(`${this.baseUrl}/users/${id}`).pipe(
+  findUserById(){
+    const httpOptions = this.getHttpOptions();
+    return this.http.get<User[]>(this.baseUrl, httpOptions).pipe(
+      catchError((err: any) => {
+      console.error(err);
+      return throwError('err in findUserById');
+      })
+    );
+  }
+
+
+  displayLoggedInUser(id){
+   const httpOptions = this.getHttpOptions();
+   console.log('show id' + id);
+    return this.http.get<User>(`${this.baseUrl}/${id}`, httpOptions).pipe(catchError((err: any) => {
+    console.log(err);
+    return throwError('err in find by username user srvice');
+      })
+    );
+  }
+displayLoggedInUserByUsername(){
+
+  const httpOptions = this.getHttpOptions();
+  console.log( 'show logged in user' );
+  return this.http.get<User>(`${this.baseUrl}/username`, httpOptions).pipe(
+    catchError((err: any) => {
+    console.error(err);
+    return throwError('show logged in user error' + err);
+    })
+  );
+}
+
+displayedLoggedInUser(id){
+  const httpOptions = this.getHttpOptions();
+  return this.http.get<User>(`${this.baseUrl}/${id}`, httpOptions).pipe(
+    catchError((err: any) => {
+      console.log(err);
+      return throwError('display loggedInUser error' + err);
+    })
+  );
+}
+
+private getHttpOptions(){
+  const credentials = this.authService.getLoggedInUsername();
+  const httpOptions = {
+    headers: new HttpHeaders({
+      Authorization: `Basic ${credentials}`,
+      'X-Requested-With':  'XMLHttpRequest'
+    })
+  };
+  return httpOptions;
+}
+index(){
+  const httpOptions = this.getHttpOptions();
+  return this.http.get<User[]>(this.baseUrl + '/', httpOptions).pipe(
+    catchError((err: any ) => {
+      console.log(err);
+      return throwError('displa logged in user error');
+    })
+  );
+}
+
+updateUser(user: User){
+  console.log(user);
+  const httpOptions = this.getHttpOptions();
+  if (this.authService.checkLogin()){
+    return this.http.put<User>(`${this.baseUrl}`, user, httpOptions).pipe(catchError((err: any )=> {
+     console.log(err);
+     return throwError('update user');
+    }));
+  }
+}
+
+enableUser(uId){
+  console.log(uId);
+  const httpOptions = this.getHttpOptions();
+  if (this.authService.checkLogin()){
+    return this.http.get<User>(`${this.baseUrl}/admin/${uId}`, httpOptions).pipe(
       catchError((err: any) => {
       console.log(err);
-      return throwError(err);
-      })
+      return throwError('enable user');
+    } )
     );
   }
 
 
-  findUserByUsername(username){
-    const token = this.authService.getCredentials();
-    const headers = new HttpHeaders().set(
-      'Authorization', `Basic ${token}`
-    );
-    return this.http.get<User>(`${this.baseUrl}/users/${username}`, {headers}).pipe(
-      catchError((err: any) => {
-        console.log(err);
-        return throwError(err);
-      })
-    );
-  }
-
-
+}
 
 
 

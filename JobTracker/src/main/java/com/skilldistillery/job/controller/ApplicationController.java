@@ -44,62 +44,57 @@ public class ApplicationController {
 		return applSvc.findAllAppl();
 	}
 	
-	@GetMapping("applied/{id}")
-	public Application findByApplicationById(@PathVariable("id") Integer userId,
-			HttpServletResponse response){
-		try {
-			Application appl = applSvc.findByApplicationById(userId);
-			if(appl == null) {
-				response.setStatus(404);
-			}
-			return appl;
-		}catch(Exception e) {
-			e.printStackTrace();
-			response.setStatus(400);
-			return null;
-		}
-		
+	@GetMapping("personalapplied")
+	public List<Application> index(Principal principal){
+		return applSvc.index(principal.getName());
 	}
 	
-	
-	/////////CREATE APPLICATION ON USER/////////////http://localhost:8083/api/applied/1
-	@PostMapping("applied/{id}")
-	public Application createApplication(@PathVariable Integer id,
-			@RequestBody Application appl,
-			HttpServletResponse response,
-			HttpServletRequest request,
-			Principal principal){
-		try {
-//			appl = applSvc.createApplicationOnUser(id, appl);
-			appl = applSvc.createApplicationOnUser(principal.getName(), appl);
-			if (appl == null) {
-				response.setStatus(404);
-			}else {
-			
-			response.setStatus(201);
-			StringBuffer url = request.getRequestURL();
-			url.append("/").append(appl.getId());
-			response.setHeader("Location", url.toString());
-			
-			}
-		}catch(Exception e) {
+	@GetMapping("appliedjobs/{aId}")
+	public Application show(@PathVariable("aId") Integer aId,
+			Principal principal,
+			HttpServletResponse response) {
+		Application appl = applSvc.show(aId, principal.getName());
+		System.out.println(appl);
+		if(appl == null) {
 			response.setStatus(404);
-			e.printStackTrace();
-			appl = null;
 		}
 		return appl;
 	}
 	
-	////////////////UPDATE APPLICATION ON USER////////////////
-	@PutMapping("{uId}/applied/{appId}")
-	public Application updateApplicationOnUser(@PathVariable("uId") Integer userId,
-			@PathVariable("appId") Integer applId,
+	
+	@PostMapping("appliedjobs")
+	public Application create(
 			@RequestBody Application appl,
-//			@RequestBody User user,
+			Principal principal,
 			HttpServletResponse response,
 			HttpServletRequest request) {
 		try {
-			appl = applSvc.updateApplicationOnUser(userId, applId, appl);
+			System.out.println(appl);
+			appl = applSvc.createApplicationOnUser(principal.getName(),appl);
+			if(appl == null) {
+				response.setStatus(404);
+			}else {
+				response.setStatus(201);
+				StringBuffer url = request.getRequestURL();
+				url.append("/").append(appl.getId());
+				response.setHeader("Location", url.toString());
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			response.setStatus(400);
+			appl = null;
+		}
+		return appl;
+	}
+	
+	
+	@PutMapping("appliedjobs/{aId}")
+	public Application update(@PathVariable("aId") Integer aId,
+			@RequestBody Application appl, Principal principal,
+			HttpServletResponse response,
+			HttpServletRequest request) {
+		try {
+			appl = applSvc.updateApplicationOnUser(principal.getName(), aId, appl);
 			if(appl == null) {
 				response.setStatus(404);
 			}
@@ -108,60 +103,30 @@ public class ApplicationController {
 			response.setStatus(400);
 			appl = null;
 		}
-		
 		return appl;
 	}
 	
-	/////////DELETE APPLICATIONS ON USER////////////
-	@DeleteMapping("{uId}/applied/{appId}")
-	public void deleteApplicationOnUser(@PathVariable("uId") Integer userId,
-			@PathVariable("appId") Integer applId, 
-			HttpServletRequest request,
-			HttpServletResponse response) {
+	@DeleteMapping("appliedjobs/{aId}")
+	public void disable(
+			@PathVariable("aId") Integer aId,
+			HttpServletResponse response, HttpServletRequest request) {
 		try {
-			
-			applSvc.deleteApplicationOnUser(userId, applId); 
-			response.setStatus(204);
-		} catch(Exception e) {
+			if(applSvc.disable(aId)) {
+				response.setStatus(204);
+			}else {
+				response.setStatus(404);
+			}
+		}catch (Exception e) {
 			e.printStackTrace();
 			response.setStatus(400);
 		}
-		
 	}
 	
-//	@GetMapping("applied")
-//	public Set<Application> index(
-//			HttpServletRequest request,
-//			HttpServletResponse respoonse,
-//			Principal principal){
-//		return applSvc.index(principal.getName());
-//	}
-//	
-//	
-//	
-//	
-//	@GetMapping("applied/{appId}")
-//	public Application show(@PathVariable Integer appId,
-//			HttpServletResponse response,
-//			HttpServletRequest request,
-//			Principal principal) {
-//		Application appl = applSvc.show(principal.getName(), appId);
-//		try {
-//			
-//			if(appl == null) {
-//				response.setStatus(404);
-//			} else {
-//				response.setStatus(201);
-//			}
-//		}catch(Exception e) {
-//			e.printStackTrace();
-//			response.setStatus(400);
-//			appl = null;
-//		}
-//		return appl;
-//		
-//		
-//	}
+	@GetMapping("appliedjobs/search/keyword/{keyword}")
+	public List<Application> findByKeyword(@PathVariable("keyword") String keyword){
+		return applSvc.findByTitleLikeOrCompanyNameLike(keyword);
+	}
+	
 	
 	
 }

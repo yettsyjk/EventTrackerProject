@@ -18,9 +18,6 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserRepository userRepo;
 
-	@Autowired
-	ApplicationRepository appliRepo;
-	
 	////////trying to config User
 	@Autowired
 	private PasswordEncoder encoder;
@@ -31,76 +28,54 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User findByUserId(Integer id) {
-		Optional<User> user = userRepo.findById(id);
-		if (user.isPresent()) {
-			user.get();
-		}
-		return user.get();
+	public User updateProfile(Integer userId, User user) {
+		Optional <User> optUser = userRepo.findById(userId);
+		if(optUser.isPresent()) {
+			User updatedUser = optUser.get();
+			updatedUser.setFirstName(user.getFirstName());
+			updatedUser.setLastName(user.getLastName());
+			updatedUser.setEmail(user.getEmail());
+			return userRepo.saveAndFlush(updatedUser);
+		}		
+		return null;
 	}
 
 	@Override
-	public User createUser(User user) {
-		if (user != null) {
-			User createdUser = userRepo.saveAndFlush(user);
-		}
-		return user;
+	public User findById(Integer userId) {
+		return userRepo.findById(userId).get();
 	}
 
 	@Override
-	public User updateUserById(Integer id, User user) {
-		Optional<User> updatedUser = userRepo.findById(id);
-		if (updatedUser.isPresent()) {
-			User updateUser = updatedUser.get();
-			updateUser.setFirstName(user.getFirstName());
-
-			updateUser.setLastName(user.getLastName());
-
-			updateUser.setEmail(user.getEmail());
-
-			updateUser.setUsername(user.getUsername());
-			updateUser.setPassword(user.getPassword());
-
-			userRepo.saveAndFlush(updateUser);
-
-		}
-		return user;
+	public User findUserByUsername(String username) {
+		return userRepo.findByUsername(username);
 	}
 
 	@Override
-	public boolean deleteUserById(Integer id) {
-
-		Optional<User> existingUser = userRepo.findById(id);
-		if (existingUser.isPresent() && existingUser.get().isEnabled() == true) {
-			userRepo.deleteById(id);
-			return true;
-		} else {
-			return false;
+	public Boolean remove(Integer userId) {
+		boolean deleted = false;
+		Optional <User> disableUser = userRepo.findById(userId); 
+		if(disableUser.isPresent() && disableUser.get().isEnabled() ==  true) {
+			disableUser.get().setEnabled(false);
+			userRepo.saveAndFlush(disableUser.get());
+			deleted = true;
 		}
+		
+		return deleted;
 	}
+
+	@Override
+	public Boolean enable(Integer userId) {
+		boolean enabled = false;
+		Optional <User> enableUser = userRepo.findById(userId); 
+		if(enableUser.isPresent() && enableUser.get().isEnabled() ==  false) {
+			enableUser.get().setEnabled(true);
+			userRepo.saveAndFlush(enableUser.get());
+			enabled = true;
+		}
+		
+		return enabled;
+	}
+	
+}
 
 	
-	///////////register while in Angular///////
-	@Override
-	public User register(String userJson){
-	  ObjectMapper mapper = new ObjectMapper();
-	  User user = null;
-	  try{
-		  user = mapper.readValue(userJson, User.class);
-	    String passwordEncode = encoder.encode(user.getPassword());
-	    user.setPassword(passwordEncode);
-	    
-	    userRepo.saveAndFlush(user);
-	  }
-	  catch(Exception e){
-	    e.printStackTrace();
-	  }
-	  return user;
-	}
-
-	@Override
-	public User show(String username, String principalUsername) {
-		User user = userRepo.findByUsername(username);
-		return userRepo.findByIdAndUsername(user.getId(), user.getUsername());
-	}
-}

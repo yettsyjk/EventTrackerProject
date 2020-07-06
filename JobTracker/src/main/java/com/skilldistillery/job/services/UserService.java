@@ -8,17 +8,13 @@ import com.skilldistillery.job.entities.User;
 
 public interface UserService {
 
+	User updateProfile(Integer userId, User user);
+	User findById(Integer iuserId);
+	User findUserByUsername(String username);
 	List<User> findAllUsers();
+	Boolean remove(Integer userId);
 	
-	User findByUserId(Integer id);
+	Boolean enable(Integer userId); 
 	
-	User createUser(User user);
-	
-	User updateUserById(Integer id, User user);
-	
-	boolean deleteUserById(Integer id); 
-	
-	User register(String userJson);
-	
-	User show(String username, String principalUsername);
+
 }

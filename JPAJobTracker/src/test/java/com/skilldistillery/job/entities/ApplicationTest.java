@@ -21,7 +21,6 @@ class ApplicationTest {
 	private static EntityManager em;
 	
 	private Application appl;
-	private User user;
 	
 
 	@BeforeAll
@@ -36,18 +35,15 @@ class ApplicationTest {
 
 	@BeforeEach
 	void setUp() throws Exception {
-		em =emf.createEntityManager();
+		em = emf.createEntityManager();
 		
 		appl = em.find(Application.class, 1);
-		user = em.find(User.class, 1);
-	
 	}
 
 	@AfterEach
 	void tearDown() throws Exception {
 		em.close();
 		appl = null;
-		user = null;
 	}
 
 	@Test
@@ -56,19 +52,19 @@ class ApplicationTest {
 		assertNotNull(appl);
 	}
 
-	@Test
-	@DisplayName("application class mapped")
-	void test2() {
-		assertNotNull(appl);
-		assertEquals("SAIC", appl.getCompanyName());
-		assertEquals("Bob", user.getFirstName());
-	}
-	@Test
-	@DisplayName("User mapped class to application")
-	void test3() {
-		assertNotNull(appl);
-		assertEquals("Bob", user.getFirstName());
-	}
+//	@Test
+//	@DisplayName("application class mapped")
+//	void test2() {
+//		assertNotNull(appl);
+//		assertEquals("SAIC", appl.getCompanyName());
+//		assertEquals("Software Developer", appl.getTitle());
+//	}
+//	@Test
+//	@DisplayName("User mapped class to application")
+//	void test3() {
+//		assertNotNull(appl);
+//		assertEquals("Bob", appl.getUser().getFirstName());
+//	}
 	
 }
 //SELECT * FROM application LEFT OUTER JOIN user ON application.user_id WHERE = user.id =1;

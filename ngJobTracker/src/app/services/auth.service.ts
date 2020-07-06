@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { throwError } from 'rxjs';
+
 import { catchError, tap } from 'rxjs/operators';
 import { User } from '../models/user';
 import { environment } from 'src/environments/environment';
-
+import { Observable, throwError, BehaviorSubject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
@@ -13,12 +13,17 @@ export class AuthService {
   // private baseUrl = 'http://localhost:8083/';
   private baseUrl = environment.baseUrl;
   // user: User = new User();
+  private currentUserSubject: BehaviorSubject<User>;
+  public currentUser: Observable<User>;
 
 
   constructor(
     private http: HttpClient,
     private router: Router
-  ) { }
+  ) {
+    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
+    this.currentUser = this.currentUserSubject.asObservable();
+  }
 
   generateBasicAuthCredentials(username, password){
     return btoa(`${username}:${password}`);
@@ -26,48 +31,46 @@ export class AuthService {
 
 
 
-  register(user) {
+  register(user: User) {
     // create request to register a new account
     return this.http.post(this.baseUrl + 'register', user)
     .pipe(
-      tap((res) => {
-        this.login(user.username, user.password).subscribe(
-          data => {
-            this.router.navigateByUrl('/home');
-          },
-          error => {
-            console.error(error);
-          }
-        );
-      }),
       catchError((err: any) => {
-        console.error(err);
-        return throwError('AuthService.register(): error registering user.');
+        console.log(err);
+        return throwError('Oops, AuthService.register(): error registering user.');
       })
     );
-  }
+   }
 
-    login(username, password) {
-      // Make credentials
-      const credentials = this.generateBasicAuthCredentials(username, password);
-      // Send credentials as Authorization header (this is spring security convention for basic auth)
-      const headers = new HttpHeaders().set(
-          'Authorization', `Basic ${credentials}`);
-
-      // create request to authenticate credentials
-      return this.http
-        .get(this.baseUrl + 'authenticate', {headers})
-        .pipe(
-          tap((res) => {
-            localStorage.setItem('credentials' , credentials);
-            return res;
-          }),
-          catchError((err: any) => {
-            console.log(err);
-            return throwError('AuthService.login(): Error logging in.');
-          })
-        );
-    }
+   login(username, password) {
+    // Make credentials
+    const credentials = this.generateBasicAuthCredentials(username, password);
+    // Send credentials as Authorization header (this is spring security convention for basic auth)
+    console.log('username: ' + username);
+    console.log('Password: ' + password);
+    console.log('Credentials: ' + credentials);
+    const httpOptions = {
+      headers: new HttpHeaders({
+        Authorization: `Basic ${credentials}`,
+        'X-Requested-With': 'XMLHttpRequest'
+      })
+   };
+   // create request to authenticate credentials
+   return this.http
+   .get<User>(this.baseUrl + 'authenticate', httpOptions)
+   .pipe(
+     tap((res) => {
+       localStorage.setItem('credentials' , credentials);
+       localStorage.setItem('currentUserId' , res.id + '');
+       localStorage.setItem('currentUserRole' , res.role);
+       return res;
+     }),
+     catchError((err: any) => {
+       console.log(err);
+       return throwError('AuthService.login(): Error logging in.');
+     })
+   );
+}
 
     checkLogin() {
       if (localStorage.getItem('credentials')) {
@@ -76,6 +79,13 @@ export class AuthService {
       return false;
     }
 
+    getCurrentUserId(){
+      return localStorage.getItem('currentUserId');
+    }
+
+    getCurrentUserRole(){
+      return localStorage.getItem('currentUserRole');
+    }
 
     getCredentials() {
       return localStorage.getItem('credentials');
@@ -93,6 +103,8 @@ export class AuthService {
 
     logout(){
       localStorage.removeItem('credentials');
+      localStorage.removeItem('currentUserRole');
+      localStorage.removeItem('currentUserId');
     }
 
 

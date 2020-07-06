@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.skilldistillery.job.entities.User;
 import com.skilldistillery.job.services.UserService;
 
-@CrossOrigin({"*", "http://localhost:4208"})
+@CrossOrigin({ "*", "http://localhost:4208" })
 @RestController
 @RequestMapping("api")
 public class UserController {
@@ -40,9 +40,74 @@ public class UserController {
 
 	@GetMapping("users/{userId}")
 	public User findByUserId(@PathVariable("userId") Integer id,
+//			Principal principal,
 			HttpServletResponse response) {
 		try {
-			User user = userSvc.findByUserId(id);
+			User user = userSvc.findById(id);
+			if (user == null) {
+				response.setStatus(404);
+			}
+			return user;
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.setStatus(400);
+			return null;
+		}
+	}
+
+	///////// UPDATE USER///////////
+	@PutMapping("users/{uId}")
+	public User updateUserById(@PathVariable("uId") Integer uId, @RequestBody User user, HttpServletResponse response) {
+		try {
+			user = userSvc.updateProfile(uId, user);
+			if (user == null) {
+				response.setStatus(404);
+			}
+		} catch (Exception e) {
+			response.setStatus(400);
+			user = null;
+			e.printStackTrace();
+		}
+		return user;
+	}
+
+	///////// DELETE USER ////////
+	@DeleteMapping("users/{uId}")
+	public void deleteUser(@PathVariable("uId") Integer uId, HttpServletResponse response) {
+		try {
+			if (userSvc.remove(uId)) {
+				response.setStatus(204);
+			} else {
+				response.setStatus(404);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.setStatus(400);
+		}
+
+	}
+
+	/////////// Enable User/////////
+	@GetMapping("users/admin/{uId}")
+	public void enableUser(@PathVariable("uId") Integer uId, HttpServletResponse response) {
+		System.out.println("uid" + uId);
+		try {
+			if (userSvc.enable(uId)) {
+				response.setStatus(204);
+			} else {
+				response.setStatus(404);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.setStatus(400);
+		}
+	}
+
+	
+	@GetMapping("users/username")
+	public User findUserByUsername(Principal principal, HttpServletResponse response) {
+		try {
+			User user = userSvc.findUserByUsername(principal.getName());
 			if(user == null) {
 				response.setStatus(404);
 			}
@@ -52,76 +117,7 @@ public class UserController {
 			response.setStatus(400);
 			return null;
 		}
-		
 	}
-
-	////////////// CREATE USER//////////////
-	@PostMapping("users")
-	public User createUser(@RequestBody User user, 
-			HttpServletResponse response, 
-			HttpServletRequest request) {
-		User createUser = userSvc.createUser(user);
-		if (user != null) {
-			response.setStatus(201);
-			StringBuffer url = request.getRequestURL();
-			url.append("/").append(user.getId());
-			response.setHeader("Location", url.toString());
-			return createUser;
-		} else {
-			response.setStatus(400);
-			createUser = null;
-
-		}
-		return user;
-	}
-
-	///////// UPDATE USER///////////
-	@PutMapping("users/{id}")
-	public User updateUserById(@PathVariable Integer id,
-			@RequestBody User user, 
-			HttpServletResponse response,
-			HttpServletRequest request) {
-		try {
-			user = userSvc.updateUserById(id, user);
-			if(user == null ) {
-				response.setStatus(404);
-			}
-		}catch(Exception e) {
-			response.setStatus(400);
-			user = null;
-			e.printStackTrace();
-		}
-		return user;
-	}
-
-	///////// DELETE USER ////////
-	@DeleteMapping("users/{id}")
-	public void deleteUser(@PathVariable("id") Integer id,
-			HttpServletRequest request,
-			HttpServletResponse response) {
-		try {
-			if(userSvc.deleteUserById(id)) {
-				response.setStatus(204);
-			}else {
-				response.setStatus(404);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			response.setStatus(400);
-		}
-	}
-	//////////username///////
-	@GetMapping("users/{username}")
-	public User viewUserProfile(@PathVariable String username,
-			Principal principal,
-			HttpServletRequest request,
-			HttpServletResponse response) {
-		User user = userSvc.show(username, principal.getName());
-		if (user != null) {
-			response.setStatus(200);
-			return userSvc.show(username, principal.getName());
-		}
-		response.setStatus(404);
-		return null;
-	}
+	
+	
 }

@@ -2,6 +2,7 @@ package com.skilldistillery.job.entities;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import javax.persistence.EntityManager;
@@ -21,7 +22,7 @@ class UserTest {
 	private static EntityManager em;
 	
 	private User user;
-	private Application appl;
+	
 	
 
 	@BeforeAll
@@ -39,7 +40,6 @@ class UserTest {
 		em =emf.createEntityManager();
 		
 		user = em.find(User.class, 1);
-		appl = em.find(Application.class, 1);
 	
 	}
 
@@ -47,7 +47,6 @@ class UserTest {
 	void tearDown() throws Exception {
 		em.close();
 		user = null;
-		appl = null;
 		
 	}
 
@@ -68,8 +67,8 @@ class UserTest {
 	@Test
 	@DisplayName("User class mapped")
 	void test3() {
-		assertNotNull(appl);
-		assertEquals("SAIC", appl.getCompanyName());
+		assertNotNull(user);
+		assertTrue(user.getJobApps().size() > 0 );
 
 	}
 	

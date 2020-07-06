@@ -38,9 +38,7 @@ public class User {
 	private String password;
 	
 	
-	private boolean enabled;
-	
-	private boolean admin;
+	private Boolean enabled;
 	
 	@JsonIgnore//will not inlcude JSON data
 	@OneToMany(mappedBy="user")
@@ -62,7 +60,7 @@ public class User {
 	
 	
 	public User(int id, String firstName, String lastName, String email, String role, LocalDateTime createDate,
-			LocalDateTime updateDate, String username, String password, boolean enabled, boolean admin) {
+			LocalDateTime updateDate, String username, String password, boolean enabled) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
@@ -73,8 +71,7 @@ public class User {
 		this.updateDate = updateDate;
 		this.username = username;
 		this.password = password;
-		this.enabled = enabled;
-		this.admin = admin;
+		this.enabled = enabled;	
 	}
 	
 	
@@ -93,7 +90,6 @@ public User(int id, String firstName, String lastName, String email, String role
 		this.username = username;
 		this.password = password;
 		this.enabled = enabled;
-		this.admin = admin;
 		this.jobApps = jobApps;
 	}
 
@@ -166,12 +162,7 @@ public User(int id, String firstName, String lastName, String email, String role
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
-	public boolean isAdmin() {
-		return admin;
-	}
-	public void setAdmin(boolean admin) {
-		this.admin = admin;
-	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

@@ -8,23 +8,14 @@ import com.skilldistillery.job.entities.Application;
 
 
 public interface ApplicationService {
-	
-	
 	List<Application> findAllAppl();
+	List<Application> findByTitleLikeOrCompanyNameLike(String kw);
 	
-	List<Application> findByUserId(Integer id);
+	List<Application> index(String username);
 	
-	Application createApplicationOnUser(String username, Application appl);
+	Application show( Integer appId, String username);
+	Application createApplicationOnUser(String username, Application appl);	
+	Application updateApplicationOnUser(String username, Integer appId, Application appl );
+	Boolean disable(Integer appId);
 	
-	Application updateApplicationOnUser(Integer userId, Integer applId, Application appl );
-
-	Application deleteApplicationOnUser(Integer userId, Integer applId );
-	
-	Application findByApplicationById(Integer userId);
-	
-	List<Application> findByTitleContaining(String title);
-	
-	Application show(String username, int appId);
-	
-	Set<Application> index(String username);
 }

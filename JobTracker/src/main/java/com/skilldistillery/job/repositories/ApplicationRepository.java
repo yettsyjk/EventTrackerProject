@@ -9,14 +9,10 @@ import com.skilldistillery.job.entities.Application;
 
 public interface ApplicationRepository extends JpaRepository<Application, Integer> {
 	
-	List<Application> findByUserId(Integer id);
+	List<Application> findByUserUsername(String username);
+	Application findByIdAndUserUsername(Integer aId, String username);
 	
-	List<Application> findByTitleContaining(String title);
+	List<Application> findByTitleLikeOrCompanyName(String kw1, String kw2);
 	
-	Application findApplicationById(Integer id);
-	
-	Application findByIdAndUserUsername(int id, String username);
-	
-	Set<Application> findByUserUsername(String username);
 
 }

@@ -10,7 +10,7 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  user: User = new User();
+  newUser = new User();
   invalidLogin = false;
   loginSuccessful = false;
   errMessage = 'Error: Check Your Credentials';
@@ -22,16 +22,18 @@ export class LoginComponent implements OnInit {
     private router: Router
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
   }
 
-  login(user) {
+  login(user: User) {
+    this.newUser = user;
+    console.log('newUser is: ' + this.newUser);
     this.authService.login(user.username, user.password).subscribe(
       data => {
         this.invalidLogin = false;
         this.loginSuccessful = true;
         this.successMessage = 'success';
-        this.router.navigateByUrl('/applied');
+        this.router.navigateByUrl('/home');
         console.log(data + ' log in');
       },
       oops => {

@@ -20,9 +20,9 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
   }
 
-  userProfile(username){
-    this.router.navigateByUrl(`userprofile/${username}`);
-  }
+  // userProfile(username){
+  //   this.router.navigateByUrl(`userprofile/${username}`);
+  // }
 
   // register(form: NgForm) {
   //   this.registerComp.register();
