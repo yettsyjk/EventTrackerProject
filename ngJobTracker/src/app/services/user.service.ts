@@ -35,14 +35,14 @@ export class UserService {
   displayLoggedInUser(id){
    const httpOptions = this.getHttpOptions();
    console.log('show id' + id);
-    return this.http.get<User>(`${this.baseUrl}/${id}`, httpOptions).pipe(catchError((err: any) => {
+   return this.http.get<User>(`${this.baseUrl}/${id}`, httpOptions).pipe(catchError((err: any) => {
     console.log(err);
     return throwError('err in find by username user srvice');
       })
     );
   }
-displayLoggedInUserByUsername(){
 
+displayLoggedInUserByUsername(){
   const httpOptions = this.getHttpOptions();
   console.log( 'show logged in user' );
   return this.http.get<User>(`${this.baseUrl}/username`, httpOptions).pipe(
@@ -73,12 +73,13 @@ private getHttpOptions(){
   };
   return httpOptions;
 }
+
 index(){
   const httpOptions = this.getHttpOptions();
   return this.http.get<User[]>(this.baseUrl + '/', httpOptions).pipe(
     catchError((err: any ) => {
       console.log(err);
-      return throwError('displa logged in user error');
+      return throwError('display logged in user error');
     })
   );
 }
@@ -87,7 +88,7 @@ updateUser(user: User){
   console.log(user);
   const httpOptions = this.getHttpOptions();
   if (this.authService.checkLogin()){
-    return this.http.put<User>(`${this.baseUrl}`, user, httpOptions).pipe(catchError((err: any )=> {
+    return this.http.put<User>(`${this.baseUrl}/${user.id}`, user, httpOptions).pipe(catchError((err: any) => {
      console.log(err);
      return throwError('update user');
     }));
@@ -104,11 +105,19 @@ enableUser(uId){
       return throwError('enable user');
     } )
     );
+    }
   }
 
-
-}
-
+  disableUser(id: number){
+    const httpOptions = this.getHttpOptions();
+    if (this.authService.checkLogin()){
+      return this.http.get<User>(`${this.baseUrl}/admin/${id}`, httpOptions).pipe(catchError((err: any) => {
+        console.error(err);
+        return throwError('disable user');
+      })
+      );
+    }
+  }
 
 
 }

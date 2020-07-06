@@ -20,6 +20,7 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('register component');
+    this.router.navigateByUrl('/register');
   }
 
 

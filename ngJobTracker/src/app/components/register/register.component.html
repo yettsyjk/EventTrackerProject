@@ -7,23 +7,31 @@
 
       <div class="form-content">
           <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                  <input name="firstName" type="text" class="form-control" placeholder="Your First Name *" required="" [(ngModel)]="newUser.firstName" />
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                    <input name="lastName" type="text" class="form-control" placeholder="Your Last Name *" required="" [(ngModel)]="newUser.lastName" />
+                </div>
               <div class="col-md-6">
                   <div class="form-group">
-                      <input name="username" type="text" class="form-control" placeholder="Your Username *" [(ngModel)]="newUser.username" />
+                      <input name="username" type="text" class="form-control" placeholder="Your Username *" required="" [(ngModel)]="newUser.username" />
                   </div>
                   <div class="form-group">
-                      <input name="email" type="email" class="form-control" placeholder="Email *" [(ngModel)]="newUser.email"/>
+                      <input name="email" type="email" class="form-control" placeholder="Your Email *" required="" [(ngModel)]="newUser.email"/>
                   </div>
               </div>
               <div class="col-md-6">
                   <div class="form-group">
-                      <input name="password" type="password" class="form-control" placeholder="Your Password *" [(ngModel)]="newUser.password" />
+                      <input name="password" type="password" class="form-control" placeholder="Your Password *" required="" [(ngModel)]="newUser.password" />
                   </div>
 
               </div>
           </div>
-          <button (click)="register(newUser)" type="button" class="btnSubmit btn btn-warning">Register Account</button>
-          <p>Aready Have an Account? <a [routerLink]="['/login']">Login Here</a></p>
+          <button (click)="register(newUser)" type="submit" class="btnSubmit btn btn-success">Register Account</button>
+          <p class="text-center">Aready Have an Account? <a [routerLink]="['/login']">Login Here</a></p>
         </div>
   </div>
 </div>

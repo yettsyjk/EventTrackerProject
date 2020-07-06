@@ -9,8 +9,8 @@
   <div class="col-md-6 col-sm-12">
      <div class="login-form">
         <form #user= "ngForm">
-          <div class="alert alert-warning" *ngIf='invalidLogin'>{{errMessage}}</div>
-          <div class="alert alert-success" *ngIf='invalidLogin'>{{successMessage}}</div>
+          <div class="alert alert-danger" *ngIf='invalidLogin'>{{errMessage}}</div>
+          <div class="alert alert-warning" *ngIf='invalidLogin'>{{successMessage}}</div>
            <div class="form-group">
               <label>User Name</label>
               <input name="username" type="text" class="form-control"  placeholder="User Name* " required="" ngModel>
