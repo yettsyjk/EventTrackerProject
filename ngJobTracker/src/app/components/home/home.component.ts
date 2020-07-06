@@ -51,31 +51,31 @@ public chartHovered(e: any): void {}
     config.type = '';
    }
 
-  ngOnInit(): void {
-    this.loadApps();
+  ngOnInit(){
+    // this.loadApps();
   }
 
-  loadApps(){
-    this.jobService.findAll().subscribe(
-      (jobApps) => {
-        console.log(jobApps);
-        jobApps.reverse();
-        this.jobApps = jobApps;
-      },
-      (errLoad) => {
-        console.error('error' + errLoad);
-        console.error(errLoad);
-      }
-    );
-  }
+//   loadApps(){
+//     this.jobService.findAll().subscribe(
+//       (jobApps) => {
+//         console.log(jobApps);
+//         jobApps.reverse();
+//         this.jobApps = jobApps;
+//       },
+//       (errLoad) => {
+//         console.error('error' + errLoad);
+//         console.error(errLoad);
+//       }
+//     );
+//   }
 
 
-getNumberOfJobApps(){
-  //need a pipe
-}
+// getNumberOfJobApps(){
+//   //need a pipe
+// }
 
-checkLogin(){
-  return this.authService.checkLogin();
-}
+// checkLogin(){
+//   return this.authService.checkLogin();
+// }
 
 }

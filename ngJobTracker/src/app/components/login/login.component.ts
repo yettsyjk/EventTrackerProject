@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
         this.invalidLogin = true;
         this.loginSuccessful = false;
         console.log('login err: ' + oops);
-        console.error(err);
+        console.error(oops);
       }
     );
   }
