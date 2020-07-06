@@ -3,6 +3,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/services/user.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -25,20 +26,21 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  login(user: User) {
-    this.newUser = user;
-    console.log('newUser is: ' + this.newUser);
-    this.authService.login(user.username, user.password).subscribe(
+  login(form: NgForm) {
+    const loggedUser = form.value;
+
+    console.log('newUser is: ' + loggedUser);
+    this.authService.login(loggedUser.username, loggedUser.password).subscribe(
       data => {
         this.invalidLogin = false;
-        this.loginSuccessful = true;
-        this.successMessage = 'success';
-        this.router.navigateByUrl('/home');
+
+        this.successMessage = 'Login success';
         console.log(data + ' log in');
+        this.router.navigateByUrl('/home');
       },
       oops => {
         this.invalidLogin = true;
-        this.loginSuccessful = false;
+        // this.loginSuccessful = false;
         console.log('login err: ' + oops);
       }
     );
