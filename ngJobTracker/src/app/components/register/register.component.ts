@@ -18,7 +18,7 @@ export class RegisterComponent implements OnInit {
     private router: Router
   ) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
     console.log('register component');
     this.router.navigateByUrl('/register');
   }
@@ -31,7 +31,7 @@ export class RegisterComponent implements OnInit {
         console.log(data);
         this.authService.login(user.username, user.password).subscribe(
           loggedIn => {
-            this.router.navigateByUrl('home');
+            this.router.navigateByUrl('/home');
             console.log(loggedIn);
             console.log('username: ' + user.username);
             console.log('password: ' + user.password);

@@ -14,7 +14,7 @@ import { environment } from 'src/environments/environment';
 export class JobService {
   private baseUrl = 'http://localhost:8083/';
   // private url = this.baseUrl + 'api/applied';
-  private url = environment.baseUrl + 'api/applied';//for AWS EC2 deployment
+  private url = environment.baseUrl + 'api/applied'; // for AWS EC2 deployment
 
 
   constructor(
@@ -24,19 +24,26 @@ export class JobService {
     private http: HttpClient
   ) { }
 
-  getHttpOptions() {
-    const credentials = this.authService.getCredentials();
-    const httpOptions = {
-      headers: {
-        Authorization: `Basic ${credentials}`,
-        'X-Requested-With': 'XMLHttpRequest'
-      }
-    };
-    return httpOptions;
-  }
+  // getHttpOptions() {
+  //   const credentials = this.authService.getCredentials();
+  //   const httpOptions = {
+  //     headers: {
+  //       Authorization: `Basic ${credentials}`,
+  //       'X-Requested-With': 'XMLHttpRequest'
+  //     }
+  //   };
+  //   return httpOptions;
+  // }
 
   index(){
-  return this.http.get<JobApp[]>(this.url).pipe(
+    const credentials = this.authService.getCredentials();
+    const httpOptions = {
+      headers: new HttpHeaders({
+        Authorization: `Basic ${credentials}`,
+        'X-Requested-With': 'XMLHttpRequest'
+      })
+    };
+    return this.http.get<JobApp[]>(this.url).pipe(
     catchError((err: any) => {
       console.error(err);
       return throwError('jobservice.ts index route retrieving jobs err: ' + err);
@@ -44,22 +51,40 @@ export class JobService {
     );
   }
 
+  findAll(){
+    return this.http.get<JobApp>(this.url).pipe(
+      catchError((err: any) => {
+        console.log(err);
+        return throwError('error' + err);
+      })
+    );
+  }
 
-  create(newJobApp){
-    newJobApp.enabled = false;
-    newJobApp.description = '';
-    if (this.authService.checkLogin()){
-    return this.http.post<JobApp>(this.url, newJobApp, this.getHttpOptions()).pipe(
+  create(jobApp: JobApp){
+    const credentials = this.authService.getCredentials();
+    const httpOptions = {
+      headers: new HttpHeaders({
+        Authorization: `Basic ${credentials}`,
+        'X-Requested-With': 'XMLHttpRequest'
+      })
+    };
+    return this.http.post<JobApp>(this.url, jobApp, httpOptions).pipe(
       catchError((err: any) => {
         console.error(err);
         return throwError('jobservice.ts create route err: ' + err);
       })
     );
     }
-  }
 
-  show(jobAppId: number) {
-    return this.http.get<JobApp>(`${this.url}/${jobAppId}`, this.getHttpOptions()).pipe(
+ show(jobAppId: number){
+    const credentials = this.authService.getCredentials();
+    const httpOptions = {
+      headers: new HttpHeaders({
+        Authorization: `Basic ${credentials}`,
+        'X-Requested-With': 'XMLHttpRequest'
+      })
+    };
+    return this.http.get<JobApp>(`${this.url}/${jobAppId}`, httpOptions).pipe(
       catchError((err: any) => {
         console.error(err);
         return throwError('jobservice.ts show route err: ' + err);
@@ -67,14 +92,16 @@ export class JobService {
     );
   }
 
-  update(jobApp: JobApp) {
-    if (jobApp.enabled){
-      jobApp.applyDate = this.datePipe.transform(Date.now(), 'shortdate');
-    } else {
-      jobApp.applyDate = '';
-    }
-    return this.http.put<JobApp>(this.url + '/' + jobApp.id, jobApp,
-     this.getHttpOptions()).pipe(
+ update(jobApp: JobApp) {
+  const credentials = this.authService.getCredentials();
+  const httpOptions = {
+    headers: new HttpHeaders({
+      Authorization: `Basic ${credentials}`,
+      'X-Requested-With': 'XMLHttpRequest'
+    })
+  };
+  return this.http.put<JobApp>(`${this.url}/${jobApp.id}`, jobApp,
+     httpOptions).pipe(
       catchError((err: any) => {
         console.error(err);
         return throwError('jobservice.ts update route err: ' + err);
@@ -82,14 +109,32 @@ export class JobService {
     );
   }
 
-  destroy(id: number) {
-    const httpOptions = this.getHttpOptions();
-    return this.http.delete(this.url +  '/' + id, httpOptions).pipe(
+ destroy(id: number){
+  const credentials = this.authService.getCredentials();
+  const httpOptions = {
+    headers: new HttpHeaders({
+      Authorization: `Basic ${credentials}`,
+      'X-Requested-With': 'XMLHttpRequest'
+    })
+  };
+  return this.http.delete<JobApp>(`${this.url}/${id}`, httpOptions).pipe(
       catchError((err: any) => {
         console.error(err);
         return throwError('jobservice.ts destroy route err: ' + err);
       })
     );
-  }
+    }
+
+ searchByKeyword(keyword){
+   return this.http.get<JobApp[]>(this.url + '/search/keyword/' + `${keyword}`).pipe(
+     catchError((err: any) => {
+        console.error(err);
+        return throwError('error' + err);
+     })
+   );
+   }
+
+
+
 
 }

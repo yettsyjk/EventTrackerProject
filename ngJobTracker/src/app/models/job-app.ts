@@ -1,3 +1,5 @@
+import { User } from './user';
+
 export class JobApp {
   id: number;
   title: string;
@@ -9,6 +11,7 @@ export class JobApp {
   zipCode: number;
   applyDate: string;
   enabled: boolean;
+  user: User;
 
   constructor(
     id?: number,
@@ -20,7 +23,8 @@ export class JobApp {
     city?: string,
     zipCode?: number,
     applyDate?: string,
-    enabled?: boolean
+    enabled?: boolean,
+    user?: User,
   ){
   this.id = id;
   this.title = title;
@@ -32,7 +36,8 @@ export class JobApp {
   this.zipCode = zipCode;
   this.applyDate = applyDate;
   this.enabled = enabled;
-  };
+  this.user = user;
+  }
 
 
 
