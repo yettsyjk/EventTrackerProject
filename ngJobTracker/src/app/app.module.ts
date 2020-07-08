@@ -22,6 +22,9 @@ import { LogoutComponent } from './components/logout/logout.component';
 import { JoblistComponent } from './components/joblist/joblist.component';
 import { JobPipe } from './pipes/job.pipe';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import { AdminComponent } from './components/admin/admin.component';
+import { SearchComponent } from './components/search/search.component';
+import { JobappComponent } from './components/jobapp/jobapp.component';
 
 
 
@@ -41,6 +44,9 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
     JoblistComponent,
     JobPipe,
     UserProfileComponent,
+    AdminComponent,
+    SearchComponent,
+    JobappComponent,
   ],
   imports: [
     BrowserModule,

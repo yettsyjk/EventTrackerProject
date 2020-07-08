@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
-import { UserService } from 'src/app/services/user.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { JobService } from 'src/app/services/job.service';
 import { JobApp } from 'src/app/models/job-app';
-import { JobPipe } from 'src/app/pipes/job.pipe';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
+
 
 @Component({
   selector: 'app-joblist',
@@ -12,16 +12,14 @@ import { JobPipe } from 'src/app/pipes/job.pipe';
   styleUrls: ['./joblist.component.css']
 })
 export class JoblistComponent implements OnInit {
-  title = 'JobTracker';
-  editJobApp = null;
-  newAppJob = new JobApp();
-  selected = null;
-  showComplete = false;
-  total = null;
-  totalCompleted = null;
+  closeResult = '';
+  modalReference: any;
 
   jobApps: JobApp[] = [];
-  jobAppsCompleted: JobApp[] = [];
+  newJobApps: JobApp = new JobApp();
+  selected: JobApp = null;
+  editJobApp: JobApp = null;
+
 
 
 
@@ -30,121 +28,17 @@ export class JoblistComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private jobService: JobService,
-    private userService: UserService,
-    private incompletePipe: JobPipe,
-    private route: ActivatedRoute,
     private router: Router,
-
+    private modalService: NgbModal
   ) { }
 
     ngOnInit(): void{
-      this.loadJobApps();
-    }
-  // ngOnInit(){
-  //   if (!this.authService.checkLogin()){
-  //     this.router.navigateByUrl('/login');
-  //   }
-  //   if (!this.selected && this.route.snapshot.paramMap.get('id')){
-  //       const jobAppIdParam = this.route.snapshot.paramMap.get('id');
-  //       const jobAppId = parseInt(jobAppIdParam, 10);
-  //       this.jobService.show(jobAppId).subscribe(
-  //         jobApp => {
-  //           this.selected = jobApp;
-  //         },
-  //         oops => {
-  //           console.error('oops' + oops);
-  //           this.router.navigateByUrl('oops');
-  //         }
-  //       );
-  //     } else {
-  //       this.reload();
-  //     }
-  // }
-  totalJobApps(){
-    this.total = this.jobApps.length;
-  }
-
-  loadJobApps(){
-    this.jobService.index().subscribe(
-      reloadApp => {
-        this.jobApps = reloadApp;
-        this.editJobApp = null;
-        this.selected = null;
-        this.totalJobApps();
-      },
-      err => {
-        console.error(err);
-      }
-    );
-  }
-
-  displayJobApp(jobApp: JobApp){
-    this.selected = jobApp;
-  }
-
-  displayTable(){
-    this.selected = null;
-    this.editJobApp = null;
-    console.log('tableSelected');
-  }
-  getJobAppCount(){
-    return this.incompletePipe.transform(this.jobApps).length;
-  }
-
-  getWarningLevel(){
-    const warningLevel = this.getJobAppCount();
-    if (warningLevel >= 5){
-      return 'badge badge-danger';
-    } else {
-      return 'badge badge-success';
-    }
-  }
-
-  addJobApp(jobApp: JobApp ){
-    this.jobService.create(this.newAppJob).subscribe(
-      data => {
-        console.log(data);
-        this.newAppJob = new JobApp();
-        this.loadJobApps();
-      },
-      badNews => {
-        console.error('err' + badNews);
-      }
-    );
-  }
-
-    setEditJobApp(){
-      this.editJobApp = Object.assign({},
-        this.selected);
+      this.router.navigateByUrl('/appliedjobs');
     }
 
-    updateJobApp(jobApp) {
-      console.log(jobApp);
-      this.jobService.update(jobApp).subscribe(
-        updated => {
-          this.loadJobApps();
-          this.selected = this.setEditJobApp;
-          this.editJobApp = null;
-        },
-        failed => {
-          console.error('err' + failed);
-          console.error(failed);
-        }
-      );
-    }
 
-  deleteJobApp(id: number) {
-    this.jobService.destroy(id).subscribe(
-      yay => {
-        this.loadJobApps();
-        console.log('successful removed job app');
-      },
-      oops => {
-        console.error('err' + oops);
-      }
-    );
-    this.selected = null;
-  }
+
+
 
 
 

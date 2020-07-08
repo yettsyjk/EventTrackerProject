@@ -6,6 +6,8 @@ export class User {
   username: string;
   password: string;
   role: string;
+  createDate: string;
+  enabled: boolean;
 
   constructor(
   id?: number,
@@ -15,6 +17,8 @@ export class User {
   username?: string,
   password?: string,
   role?: string,
+  createDate?: string,
+  enabled?: boolean,
 
   ){
   this.id = id;
@@ -24,6 +28,8 @@ export class User {
   this.username = username;
   this.password = password;
   this.role = role;
+  this.createDate = createDate;
+  this.enabled = enabled;
   }
 
 

@@ -1,12 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgbAccordionConfig } from '@ng-bootstrap/ng-bootstrap';
+
+import { ChartDataSets, ChartOptions } from 'chart.js';
+import { Color, Label } from 'ng2-charts';
+
+
 import { JobService } from 'src/app/services/job.service';
 import { Router } from '@angular/router';
-import { RegisterComponent } from '../register/register.component';
 
-import { NgbAccordionConfig } from '@ng-bootstrap/ng-bootstrap';
-import { ChartsModule } from 'ng2-charts';
-import { ChartDataSets, ChartOptions } from 'chart.js';
+
+
 
 @Component({
   selector: 'app-home',
@@ -18,33 +21,27 @@ export class HomeComponent implements OnInit {
 
   //line chart using angular charts
   public lineChartData: ChartDataSets[] = [
+    { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
+  ];
+  public lineChartLabels: Label[] = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+  // public lineChartOptions: (ChartOptions & { annotation: any }) = {
+  //   responsive: true,
+  // };
+  public lineChartColors: Color[] = [
     {
-      data:
-      [1, 2, 3, 4, 5],
-      label: 'July Jobs Applied'
+      borderColor: 'black',
+      backgroundColor: 'rgba(255,0,0,0.3)',
     },
   ];
-  public lineChartLabels: Label[] = ['July', 'August'];
-  public lineChartOptions: (ChartOptions & {
-    annotation: any
-  }) = {};
-
-  public lineChartColors: Color[] = [{
-    borderColor: 'black',
-    backgroundColor: 'rgba(105, 0, 132,0.2)',
-  }, ];
-
-public lineChartLegend = true;
-public lineChartType = 'line';
-public lineChartPlugins = [];
+  public lineChartLegend = true;
+  public lineChartType = 'line';
+  public lineChartPlugins = [];
 public chartClicked(e: any): void {}
 public chartHovered(e: any): void {}
 
   constructor(
-    private authService: AuthService,
     private router: Router,
     private jobService: JobService,
-    private registerComp: RegisterComponent,
     config: NgbAccordionConfig
   ) {
     config.closeOthers = true;
